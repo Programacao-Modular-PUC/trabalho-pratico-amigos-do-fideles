@@ -17,7 +17,6 @@ body {
     min-height: 100vh;
 }
 
-/* ── NAVBAR ──────────────────────────────────────── */
 .navbar-fideles {
     background-color: var(--primary-marrom);
     padding: 10px 0;
@@ -40,7 +39,6 @@ body {
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── HEADER DO PAINEL ────────────────────────────── */
 .painel-header {
     display: flex;
     align-items: center;
@@ -86,7 +84,6 @@ body {
     transform: translateY(-2px);
 }
 
-/* ── STATS ───────────────────────────────────────── */
 .stats-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -135,7 +132,6 @@ body {
     letter-spacing: .06em;
 }
 
-/* ── BUSCA ───────────────────────────────────────── */
 .busca-wrap {
     position: relative;
     margin-bottom: 16px;
@@ -167,7 +163,6 @@ body {
     border-color: var(--secondary-gold);
 }
 
-/* ── TABELA ──────────────────────────────────────── */
 .tabela-wrap {
     background: var(--white-paper);
     border-radius: 20px;
@@ -245,7 +240,6 @@ body {
     white-space: nowrap;
 }
 
-/* ── BADGES STATUS ───────────────────────────────── */
 .badge-status {
     border-radius: 999px;
     padding: 4px 12px;
@@ -260,7 +254,6 @@ body {
 .badge-indisp { background: #f8d7da; color: #8b1a1a; }
 .badge-manut  { background: #fff3cd; color: #856404; }
 
-/* ── BOTÕES DE AÇÃO ──────────────────────────────── */
 .btn-acao {
     width: 34px;
     height: 34px;
@@ -295,7 +288,6 @@ body {
     color: white;
 }
 
-/* ── SEM DADOS ───────────────────────────────────── */
 .sem-dados {
     padding: 48px;
     display: flex;
@@ -306,7 +298,6 @@ body {
     font-style: italic;
 }
 
-/* ── MODAL ───────────────────────────────────────── */
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -377,7 +368,6 @@ body {
     gap: 12px;
 }
 
-/* ── FORM DENTRO DO MODAL ────────────────────────── */
 .form-label-custom {
     display: block;
     font-size: .8rem;
@@ -405,7 +395,6 @@ body {
     border-color: var(--secondary-gold);
 }
 
-/* ── COMODIDADES ─────────────────────────────────── */
 .comodidades-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -432,7 +421,6 @@ body {
     accent-color: var(--primary-marrom);
 }
 
-/* ── BOTÕES DO MODAL ─────────────────────────────── */
 .btn-salvar {
     background-color: var(--primary-marrom);
     color: white;
@@ -491,7 +479,6 @@ body {
     background-color: #96281b;
 }
 
-/* ── TOAST ───────────────────────────────────────── */
 .toast-custom {
     position: fixed;
     bottom: 28px;
@@ -517,7 +504,6 @@ body {
 .toast-ok   { background-color: var(--primary-marrom); }
 .toast-erro { background-color: #c0392b; }
 
-/* ── RESPONSIVO ──────────────────────────────────── */
 @media (max-width: 768px) {
     .stats-row { grid-template-columns: repeat(2, 1fr); }
     .comodidades-grid { grid-template-columns: repeat(2, 1fr); }

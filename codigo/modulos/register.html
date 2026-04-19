@@ -80,7 +80,6 @@
 </div>
 
 <script>
-    // Máscara de CPF
     document.getElementById('cpf').addEventListener('input', function (e) {
         var v = e.target.value.replace(/\D/g, '');
         if (v.length <= 11) {
@@ -89,7 +88,6 @@
         }
     });
 
-    // Máscara de CEP
     document.getElementById('cep').addEventListener('input', function (e) {
         var v = e.target.value.replace(/\D/g, '');
         v = v.replace(/(\d{5})(\d{3})/, "$1-$2");

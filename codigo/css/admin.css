@@ -16,7 +16,6 @@ body {
     font-family: 'Georgia', serif;
 }
 
-/* ── NAVBAR ──────────────────────────────────────── */
 .navbar-fideles {
     background-color: var(--primary-marrom);
     padding: 10px 0;
@@ -26,7 +25,6 @@ body {
     max-height: 90px !important;
 }
 
-/* ── CONTAINER PRINCIPAL ─────────────────────────── */
 main {
     display: flex;
     justify-content: center;
@@ -49,7 +47,6 @@ main {
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── BANNER DE SUCESSO ───────────────────────────── */
 .banner {
     background-color: var(--primary-marrom);
     border-radius: 15px;
@@ -91,7 +88,6 @@ main {
     margin-top: 4px;
 }
 
-/* ── BADGE ───────────────────────────────────────── */
 .badge {
     display: inline-flex;
     align-items: center;
@@ -120,14 +116,12 @@ main {
     50%       { opacity: .3; }
 }
 
-/* ── DIVIDER DOURADO ─────────────────────────────── */
 .divider-gold {
     height: 2px;
     background: linear-gradient(90deg, transparent, var(--secondary-gold), transparent);
     margin: 20px 0;
 }
 
-/* ── CÓDIGO DA RESERVA ───────────────────────────── */
 .code-strip {
     background-color: var(--background-rustico);
     border-radius: 12px;
@@ -161,7 +155,6 @@ main {
     color: #888;
 }
 
-/* ── SEÇÃO TÍTULO ────────────────────────────────── */
 .secao-titulo {
     color: var(--primary-marrom);
     font-weight: bold;
@@ -174,7 +167,6 @@ main {
     display: inline-block;
 }
 
-/* ── GRID DE CONTEÚDO ────────────────────────────── */
 .body-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -190,7 +182,6 @@ main {
     border-right: 1px solid #E8DFD0;
 }
 
-/* ── LINHAS DE INFO ──────────────────────────────── */
 .info-row {
     display: flex;
     flex-direction: column;
@@ -222,7 +213,6 @@ main {
     opacity: .8;
 }
 
-/* ── DATAS ───────────────────────────────────────── */
 .dates-row {
     display: flex;
     align-items: center;
@@ -239,7 +229,6 @@ main {
     flex-shrink: 0;
 }
 
-/* ── TOTAL ───────────────────────────────────────── */
 .total-section {
     grid-column: 1 / -1;
     padding: 24px;
@@ -298,7 +287,6 @@ main {
     font-weight: bold;
 }
 
-/* ── OBSERVAÇÕES ─────────────────────────────────── */
 .obs-section {
     grid-column: 1 / -1;
     padding: 20px 24px;
@@ -317,7 +305,6 @@ main {
     min-height: 50px;
 }
 
-/* ── AÇÕES ───────────────────────────────────────── */
 .actions {
     padding: 24px;
     display: flex;
@@ -360,7 +347,6 @@ main {
     color: var(--primary-marrom);
 }
 
-/* ── IMPRESSÃO ───────────────────────────────────── */
 @media print {
     body { background: white; }
     .navbar-fideles { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
@@ -370,7 +356,6 @@ main {
     .card { box-shadow: none; }
 }
 
-/* ── RESPONSIVO ──────────────────────────────────── */
 @media (max-width: 640px) {
     .body-grid { grid-template-columns: 1fr; }
     .section:nth-child(odd) { border-right: none; }
