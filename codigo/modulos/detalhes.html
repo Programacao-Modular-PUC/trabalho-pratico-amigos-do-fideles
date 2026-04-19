@@ -23,12 +23,12 @@
         <div class="detalhe-header">
             <div class="row">
                 <div class="col-lg-7">
-                    <img id="fotoPrincipal" src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800" class="img-principal" alt="Residência">
+                    <img id="fotoPrincipal" src="" class="img-principal" alt="Residência">
                 </div>
                 <div class="col-lg-5 info-residencia">
-                    <h1 id="nomeResidencia">Villa das Chaves</h1>
-                    <p id="enderecoResidencia" class="endereco-label"><i class="bi bi-geo-alt"></i> Rua das Amendoeiras, 123 - Taipu de Fora, Maraú</p>
-                    <p id="descricaoResidencia" class="text-muted">Carregando descrição...</p>
+                    <h1 id="nomeResidencia">Carregando...</h1>
+                    <p id="enderecoResidencia" class="endereco-label">---</p>
+                    <p id="descricaoResidencia" class="text-muted">---</p>
                     
                     <hr>
                     
@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-4 text-end">
                                     <span class="valor-base">R$ 450</span><br>
-                                    <a href="reserva.html" class="btn-reservar-quarto">Escolher</a>
+                                    <a href="#" class="btn-reservar-quarto btn-reserva" data-quarto="Quarto de Casal (Hidro + Ar)" data-preco="450">Escolher</a>
                                 </div>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                                 </div>
                                 <div class="col-4 text-end">
                                     <span class="valor-base">R$ 280</span><br>
-                                    <a href="reserva.html" class="btn-reservar-quarto">Escolher</a>
+                                    <a href="#" class="btn-reservar-quarto btn-reserva" data-quarto="Quarto Individual (Ar)" data-preco="280">Escolher</a>
                                 </div>
                             </div>
                         </div>
@@ -74,19 +74,19 @@
                 nome: "Pousada Recanto do Sol",
                 endereco: "Rua Principal, 10 - Barra Grande, Maraú",
                 foto: "https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800",
-                descricao: "Um refúgio tranquilo com o melhor pôr do sol de Maraú. Ideal para casais e Amigos do Fideles que buscam paz e contato com a natureza."
+                descricao: "Um refúgio tranquilo com o melhor pôr do sol de Maraú."
             },
             'villa': {
                 nome: "Villa das Chaves",
                 endereco: "Rua das Amendoeiras, 123 - Taipu de Fora, Maraú",
                 foto: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800",
-                descricao: "Luxo e exclusividade em frente às piscinas naturais. Esta Villa oferece o que há de melhor em conforto rústico e sofisticação."
+                descricao: "Luxo e exclusividade em frente às piscinas naturais."
             },
             'bangalo': {
                 nome: "Bangalô do Fideles",
                 endereco: "Praia de Algodões, S/N - Maraú",
                 foto: "https://images.unsplash.com/photo-1540541338287-41700207dee6?w=800",
-                descricao: "Pé na areia e estilo rústico para uma experiência autêntica. O bangalô é a escolha perfeita para quem quer desconectar do mundo."
+                descricao: "Pé na areia e estilo rústico para uma experiência autêntica."
             }
         };
 
@@ -95,14 +95,19 @@
 
         if (idResidencia && dadosResidencias[idResidencia]) {
             const res = dadosResidencias[idResidencia];
+            
             document.getElementById('nomeResidencia').innerText = res.nome;
             document.getElementById('enderecoResidencia').innerHTML = '<i class="bi bi-geo-alt"></i> ' + res.endereco;
             document.getElementById('descricaoResidencia').innerText = res.descricao;
             document.getElementById('fotoPrincipal').src = res.foto;
-            document.title = res.nome + " - Amigos do Fideles";
+
+            const botoes = document.querySelectorAll('.btn-reserva');
+            botoes.forEach(botao => {
+                const nomeQuarto = botao.getAttribute('data-quarto');
+                const precoQuarto = botao.getAttribute('data-preco');
+                botao.href = `reserva.html?residencia=${res.nome}&quarto=${nomeQuarto}&preco=${precoQuarto}`;
+            });
         }
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
