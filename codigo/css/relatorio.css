@@ -1,0 +1,61 @@
+/* Estilos específicos para o Relatório */
+
+.section-title {
+    color: var(--primary-marrom);
+    font-family: 'Georgia', serif;
+}
+
+.report-container {
+    background: var(--white-paper);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 4px 4px 15px rgba(93, 62, 26, 0.08);
+}
+
+.custom-table {
+    margin-bottom: 0;
+}
+
+.custom-table thead th {
+    background-color: var(--primary-marrom);
+    color: var(--secondary-gold);
+    border: none;
+    padding: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.custom-table tbody td {
+    padding: 20px 15px;
+    vertical-align: middle;
+    color: var(--primary-marrom);
+    border-bottom: 1px solid #eee;
+}
+
+.badge-concluido {
+    background-color: #28a745; /* Verde para sucesso */
+    color: white;
+    padding: 8px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+}
+
+.btn-outline-marrom {
+    color: var(--primary-marrom);
+    border: 2px solid var(--primary-marrom);
+    font-weight: bold;
+    padding: 10px 25px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.btn-outline-marrom:hover {
+    background-color: var(--primary-marrom);
+    color: white;
+}
+
+/* Ajuste para a logo não quebrar o layout */
+.navbar-brand img {
+    max-height: 70px !important;
+}

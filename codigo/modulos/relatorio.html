@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Viagens - Amigos do Fideles</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/index.css"> <link rel="stylesheet" href="../css/relatorio.css"> </head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-fideles">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="../img/logo.png" alt="Amigos do Fideles Logo">
+            </a>
+            <div class="ms-auto d-flex align-items-center">
+                <span class="text-white me-3 d-none d-md-block">Olá, Amigo Gabriel!</span>
+                <a href="login.html" class="btn btn-outline-light btn-sm">Sair</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="py-5 text-center container">
+        <div class="row py-lg-4">
+            <div class="col-lg-8 mx-auto">
+                <h1 class="fw-bold section-title">Meu Histórico de Viagens</h1>
+                <p class="lead text-muted">Confira os detalhes das suas estadias na Península de Maraú.</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mb-5">
+        <div class="table-responsive report-container">
+            <table class="table table-hover custom-table">
+                <thead>
+                    <tr>
+                        <th><i class="bi bi-house-door me-2"></i>Residência</th>
+                        <th><i class="bi bi-geo-alt me-2"></i>Localização</th>
+                        <th><i class="bi bi-calendar-check me-2"></i>Período</th>
+                        <th><i class="bi bi-currency-dollar me-2"></i>Valor Total</th>
+                        <th><i class="bi bi-info-circle me-2"></i>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Pousada Recanto do Sol</strong></td>
+                        <td>Barra Grande</td>
+                        <td>12/03/2026 - 15/03/2026</td>
+                        <td>R$ 1.200,00</td>
+                        <td><span class="badge badge-concluido">Concluída</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Villa das Chaves</strong></td>
+                        <td>Taipu de Fora</td>
+                        <td>10/01/2026 - 17/01/2026</td>
+                        <td>R$ 4.500,00</td>
+                        <td><span class="badge badge-concluido">Concluída</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bangalô do Fideles</strong></td>
+                        <td>Algodões</td>
+                        <td>20/12/2025 - 26/12/2025</td>
+                        <td>R$ 3.800,00</td>
+                        <td><span class="badge badge-concluido">Concluída</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="index.html" class="btn btn-outline-marrom">
+                <i class="bi bi-arrow-left me-2"></i>Voltar para Exploração
+            </a>
+        </div>
+    </main>
+
+    <footer class="py-4 text-center text-muted border-top">
+        <small>© 2026 Amigos do Fideles - Engenharia de Software PUC Minas</small>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
