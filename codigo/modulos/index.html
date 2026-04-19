@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amigos do Fideles - Explorar</title>
+    <title>Amigos do Fideles - Explorar Maraú</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../css/index.css">
 </head>
 
@@ -13,8 +14,8 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark navbar-fideles">
         <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="../img/logo.png" alt="Amigos do Fideles">
+            <a class="navbar-brand" href="index.html">
+                <img src="../img/logo.png" alt="Amigos do Fideles Logo">
             </a>
             <div class="ms-auto d-flex align-items-center">
                 <span class="text-white me-3 d-none d-md-block">Olá, Amigo Gabriel!</span>
@@ -23,69 +24,71 @@
         </div>
     </nav>
 
-    <div class="container text-center py-5">
-        <h1 class="fw-bold" style="color: var(--primary-marrom); font-family: 'Georgia', serif;">Onde você quer relaxar?
-        </h1>
+    <header class="py-5 text-center container">
+        <div class="row py-lg-4">
+            <div class="col-lg-8 mx-auto">
+                <h1 class="fw-bold" style="color: var(--primary-marrom); font-family: 'Georgia', serif;">Onde você quer
+                    relaxar?</h1>
+                <p class="lead text-muted">Explore nossas residências exclusivas na Península de Maraú.</p>
 
-        <div class="search-container">
-            <div class="input-group">
-                <input type="text" class="form-control search-input" placeholder="Buscar por bairro em Maraú...">
-                <button class="btn btn-search" type="button">Buscar</button>
+                <div class="search-container">
+                    <div class="input-group">
+                        <input type="text" class="form-control search-input"
+                            placeholder="Buscar por bairro em Maraú...">
+                        <button class="btn btn-search" type="button">Buscar</button>
+                    </div>
+                </div>
             </div>
         </div>
+    </header>
 
-        <div class="row g-4 mt-2">
+    <main class="container mb-5">
+        <div class="row g-4">
+
             <div class="col-md-4">
                 <div class="residencia-card">
-                    <img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=500"
-                        class="residencia-img">
+                    <img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=500" class="residencia-img"
+                        alt="Pousada">
                     <div class="residencia-content text-start">
-                        <div class="residencia-local">Barra Grande</div>
+                        <div class="residencia-local">Barra Grande, Maraú</div>
                         <h5 class="residencia-title">Pousada Recanto do Sol</h5>
-                        <div>
-                            <span class="tag-opcional">Ar-condicionado</span>
-                        </div>
-                        <a href="#" class="btn-card">Ver Quartos Disponíveis</a>
+                        <a href="detalhes.html?id=pousada" class="btn-card">Ver Quartos</a>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-4">
                 <div class="residencia-card">
-                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=500"
-                        class="residencia-img">
+                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=500" class="residencia-img"
+                        alt="Villa">
                     <div class="residencia-content text-start">
                         <div class="residencia-local">Taipu de Fora</div>
                         <h5 class="residencia-title">Villa das Chaves</h5>
-                        <div>
-                            <span class="tag-opcional">Ar-condicionado</span>
-                            <span class="tag-opcional">Hidromassagem</span>
-                        </div>
-                        <a href="#" class="btn-card">Ver Quartos Disponíveis</a>
+                        <a href="detalhes.html?id=villa" class="btn-card">Ver Quartos</a>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-4">
                 <div class="residencia-card">
-                    <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=500"
-                        class="residencia-img">
+                    <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=500" class="residencia-img"
+                        alt="Bangalô">
                     <div class="residencia-content text-start">
                         <div class="residencia-local">Algodões</div>
                         <h5 class="residencia-title">Bangalô do Fideles</h5>
-                        <div>
-                            <span class="tag-opcional">Hidromassagem</span>
-                        </div>
-                        <a href="#" class="btn-card">Ver Quartos Disponíveis</a>
+                        <a href="detalhes.html?id=bangalo" class="btn-card">Ver Quartos</a>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <footer class="py-4 text-center text-muted">
+        </div>
+    </main>
+
+    <footer class="py-4 text-center text-muted border-top">
         <small>© 2026 Amigos do Fideles - Engenharia de Software PUC Minas</small>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>//pesquisa
         document.querySelector('.btn-search').addEventListener('click', function () {
             const termoBusca = document.querySelector('.search-input').value.toLowerCase();

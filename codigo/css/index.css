@@ -24,25 +24,19 @@ body {
 }
 
 .navbar-brand img {
-    max-height: 90px !important; 
+    max-height: 90px !important;
     width: auto;
-    transition: transform 0.3s ease;
-}
-
-.navbar-brand img:hover {
-    transform: scale(1.03);
 }
 
 .search-container {
-    max-width: 700px;
-    margin: 40px auto;
+    max-width: 600px;
+    margin: 20px auto;
 }
 
 .search-input {
     border: 2px solid var(--primary-marrom);
     border-radius: 12px 0 0 12px !important;
     padding: 15px;
-    font-family: 'Segoe UI', sans-serif;
 }
 
 .btn-search {
@@ -52,12 +46,10 @@ body {
     border-radius: 0 12px 12px 0 !important;
     font-weight: bold;
     padding: 0 25px;
-    transition: 0.3s;
 }
 
 .btn-search:hover {
     background-color: var(--secondary-gold);
-    border-color: var(--secondary-gold);
     color: var(--primary-marrom) !important;
 }
 
@@ -65,7 +57,7 @@ body {
     background: var(--white-paper);
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 4px 4px 15px rgba(93, 62, 26, 0.1);
+    box-shadow: 4px 4px 15px rgba(93, 62, 26, 0.08);
     border: none;
     height: 100%;
     transition: transform 0.3s ease;
@@ -76,13 +68,13 @@ body {
 }
 
 .residencia-img {
-    height: 200px;
+    height: 220px;
     object-fit: cover;
     width: 100%;
 }
 
 .residencia-content {
-    padding: 20px;
+    padding: 25px;
 }
 
 .residencia-local {
@@ -96,20 +88,8 @@ body {
 .residencia-title {
     color: var(--primary-marrom);
     font-weight: bold;
-    margin: 10px 0;
-    font-size: 1.3rem;
-}
-
-.tag-opcional {
-    font-size: 0.75rem;
-    background: #F1E6D2;
-    padding: 5px 10px;
-    border-radius: 6px;
-    margin-right: 5px;
-    color: var(--primary-marrom);
-    font-weight: 600;
-    border: 1px solid var(--secondary-gold);
-    display: inline-block;
+    margin: 8px 0 20px 0;
+    font-size: 1.4rem;
 }
 
 .btn-card {
@@ -123,18 +103,10 @@ body {
     text-align: center;
     text-decoration: none;
     font-weight: bold;
-    margin-top: 20px;
     transition: 0.3s;
 }
 
 .btn-card:hover {
     background-color: var(--secondary-gold) !important;
     color: var(--primary-marrom) !important;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-footer {
-    padding: 40px 0;
-    color: var(--secondary-gold);
-    font-size: 0.9rem;
 }
