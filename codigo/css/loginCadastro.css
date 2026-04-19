@@ -1,0 +1,104 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root {
+    --primary-marrom: #5D3E1A; 
+    --secondary-gold: #F0A500;   
+    --background-rustico: #F7EAD0; 
+    --white-paper: #FFFDF8;       
+    --text-color: #333333;
+    --shadow-rustica: 4px 4px 15px rgba(93, 62, 26, 0.15);
+}
+
+body {
+    background-color: var(--background-rustico);
+    font-family: 'Georgia', serif; 
+    color: var(--text-color);
+    margin: 0;
+}
+
+.flex-center {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.custom-card {
+    background: var(--white-paper);
+    border-radius: 20px;
+    box-shadow: var(--shadow-rustica);
+    padding: 2.5rem;
+    border: 2px solid #E8DFD0;
+}
+
+.card-header-logo {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.login-card { max-width: 450px; width: 100%; text-align: center; }
+.login-card .card-header-logo img {
+    max-height: 160px !important;
+    width: auto;
+}
+
+.register-card { max-width: 850px; width: 100%; margin: 40px auto; }
+.register-card .card-header-logo img {
+    max-height: 200px !important; 
+    width: auto;
+    margin-bottom: 10px;
+}
+
+.auth-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-marrom);
+    text-align: center;
+}
+
+.auth-subtitle {
+    font-size: 1rem;
+    color: var(--secondary-gold);
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.section-title {
+    border-left: 6px solid var(--secondary-gold);
+    padding-left: 15px;
+    margin: 2rem 0 1rem 0;
+    color: var(--primary-marrom);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 1rem;
+}
+
+.form-control {
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #CCC;
+}
+
+.btn-auth {
+    background-color: var(--primary-marrom);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px;
+    width: 100%;
+    font-weight: 600;
+    font-family: 'Georgia', serif;
+    transition: 0.3s;
+}
+
+.btn-auth:hover {
+    background-color: #4A3114;
+    transform: translateY(-2px);
+    color: white;
+}
+
+.auth-link { color: var(--primary-marrom); font-weight: 700; text-decoration: none; }
