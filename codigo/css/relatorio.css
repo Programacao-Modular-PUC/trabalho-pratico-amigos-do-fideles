@@ -1,60 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-.section-title {
-    color: var(--primary-marrom);
+:root {
+    --primary-marrom: #5D3E1A; 
+    --secondary-gold: #F0A500;   
+    --background-rustico: #F7EAD0; 
+}
+
+body {
+    background-color: var(--background-rustico);
     font-family: 'Georgia', serif;
 }
 
-.report-container {
-    background: var(--white-paper);
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 4px 4px 15px rgba(93, 62, 26, 0.08);
-}
-
-.custom-table {
-    margin-bottom: 0;
-}
-
-.custom-table thead th {
+.navbar-fideles {
     background-color: var(--primary-marrom);
-    color: var(--secondary-gold);
-    border: none;
-    padding: 15px;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.85rem;
+    padding: 10px 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
-
-.custom-table tbody td {
-    padding: 20px 15px;
-    vertical-align: middle;
-    color: var(--primary-marrom);
-    border-bottom: 1px solid #eee;
-}
-
-.badge-concluido {
-    background-color: #28a745;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 50px;
-    font-size: 0.75rem;
-}
-
-.btn-outline-marrom {
-    color: var(--primary-marrom);
-    border: 2px solid var(--primary-marrom);
-    font-weight: bold;
-    padding: 10px 25px;
-    border-radius: 10px;
-    transition: 0.3s;
-}
-
-.btn-outline-marrom:hover {
-    background-color: var(--primary-marrom);
-    color: white;
-}
-
 
 .navbar-brand img {
-    max-height: 70px !important;
+    max-height: 90px !important;
+    width: auto;
+}
+
+.card-gestao {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    border: none;
+}
+
+.resumo-financeiro {
+    background: var(--primary-marrom);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.tabela-historico thead {
+    background-color: var(--primary-marrom);
+    color: white;
+}
+
+.nome-cliente {
+    font-weight: bold;
+    color: var(--primary-marrom);
+}
+
+.badge-quarto {
+    background: #eee;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-size: 0.8rem;
 }
