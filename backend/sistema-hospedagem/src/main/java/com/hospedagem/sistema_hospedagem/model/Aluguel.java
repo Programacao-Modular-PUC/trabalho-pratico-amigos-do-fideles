@@ -1,0 +1,126 @@
+package com.hospedagem.sistema_hospedagem.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "alugueis")
+public class Aluguel {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private LocalDateTime dataEntrada;
+    private LocalDateTime dataSaida;
+    private int qtdDiarias;
+    private Double valorFinal;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "quarto_id")
+    private Quarto quarto;
+
+    public Aluguel() {
+    }
+
+    public Aluguel(LocalDateTime dataEntrada, LocalDateTime dataSaida, Cliente cliente, Quarto quarto) {
+        this.dataEntrada = dataEntrada;
+        this.dataSaida = dataSaida;
+        this.cliente = cliente;
+        this.quarto = quarto;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getDataEntrada() {
+        return dataEntrada;
+    }
+
+    public void setDataEntrada(LocalDateTime dataEntrada) {
+        this.dataEntrada = dataEntrada;
+    }
+
+    public LocalDateTime getDataSaida() {
+        return dataSaida;
+    }
+
+    public void setDataSaida(LocalDateTime dataSaida) {
+        this.dataSaida = dataSaida;
+    }
+
+    public int getQtdDiarias() {
+        return qtdDiarias;
+    }
+
+    public void setQtdDiarias(int qtdDiarias) {
+        this.qtdDiarias = qtdDiarias;
+    }
+
+    public Double getValorFinal() {
+        return valorFinal;
+    }
+
+    public void setValorFinal(Double valorFinal) {
+        this.valorFinal = valorFinal;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Quarto getQuarto() {
+        return quarto;
+    }
+
+    public void setQuarto(Quarto quarto) {
+        this.quarto = quarto;
+    }
+
+    public int calcularDiarias() {
+        if (dataEntrada == null || dataSaida == null) return 0;
+
+        int diarias = 0;
+        LocalDateTime entrada = dataEntrada;
+
+        // entrada apos 12h conta como diaria completa
+        if (dataEntrada.getHour() > 12) {
+            diarias++;
+            entrada = dataEntrada.plusDays(1).withHour(12).withMinute(0);
+        }
+
+        // saida apos 12h adiciona nova diaria
+        LocalDateTime saida = dataSaida;
+        if (dataSaida.getHour() > 12) {
+            diarias++;
+            saida = dataSaida.withHour(12).withMinute(0);
+        }
+
+        diarias += (int) java.time.Duration.between(entrada, saida).toDays();
+        return diarias;
+    }
+
+    public Double calcularValorFinal() {
+        this.qtdDiarias = calcularDiarias();
+        this.valorFinal = quarto.calcularValorFinal(qtdDiarias);
+        return valorFinal;
+    }
+}
