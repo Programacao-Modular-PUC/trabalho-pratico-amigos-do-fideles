@@ -13,20 +13,72 @@
             <img src="../img/logo.png" alt="Logo">
             <p class="auth-subtitle mt-2">Sua hospedaria em Maraú te espera.</p>
         </div>
-        <form>
+
+        <div id="msg-erro" class="alert alert-danger d-none" role="alert"></div>
+
+        <form id="form-login">
             <div class="mb-3 text-start">
-                <label class="form-label">E-mail ou CPF</label>
-                <input type="text" class="form-control" required>
+                <label class="form-label">E-mail</label>
+                <input type="email" id="email" class="form-control" placeholder="exemplo@email.com" required>
             </div>
             <div class="mb-4 text-start">
                 <label class="form-label">Senha</label>
-                <input type="password" class="form-control" required>
+                <input type="password" id="senha" class="form-control" placeholder="Sua senha" required>
             </div>
-            <button type="submit" class="btn btn-auth">Acessar Hospedaria</button>
+            <button type="submit" class="btn btn-auth" id="btn-login">Acessar Hospedaria</button>
             <div class="mt-3">
                 <small>Novo por aqui? <a href="register.html" class="auth-link">Crie uma conta</a></small>
             </div>
         </form>
     </div>
+
+    <script>
+        // Se o frontend estiver em file://, troca automaticamente para localhost:8080
+        const API = window.location.protocol === 'file:'
+            ? 'http://localhost:8080'
+            : (window.location.origin.includes('8080') ? '' : 'http://localhost:8080');
+
+        document.getElementById('form-login').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-login');
+            const erro = document.getElementById('msg-erro');
+            erro.classList.add('d-none');
+            btn.disabled = true;
+            btn.textContent = 'Entrando...';
+
+            try {
+                const res = await fetch(`${API}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        email: document.getElementById('email').value,
+                        senha: document.getElementById('senha').value
+                    })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(data.erro || 'E-mail ou senha inválidos.');
+                }
+
+                sessionStorage.setItem('clienteNome', data.nome);
+                sessionStorage.setItem('clienteId', data.clienteId);
+                window.location.href = 'index.html';
+
+            } catch (err) {
+                // "Failed to fetch" significa que o backend nao respondeu
+                if (err.message === 'Failed to fetch') {
+                    erro.textContent = 'Não foi possível conectar ao servidor. Verifique se o backend está rodando na porta 8080.';
+                } else {
+                    erro.textContent = err.message;
+                }
+                erro.classList.remove('d-none');
+                btn.disabled = false;
+                btn.textContent = 'Acessar Hospedaria';
+            }
+        });
+    </script>
 </body>
 </html>
