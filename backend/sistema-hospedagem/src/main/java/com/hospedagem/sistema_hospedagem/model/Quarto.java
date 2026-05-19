@@ -76,12 +76,15 @@ public abstract class Quarto {
         this.residencia = residencia;
     }
 
+    // Calculo simples da diaria sem parametros extras (implementado por cada subtipo)
     public abstract Double calcularDiaria();
 
-    public Double calcularValorFinal(int qtdDiarias) {
+    // Calculo padrao do valor final: usa calcularDiaria() + comodidades × diarias
+    // Subtipos que precisam de logica diferente (ex: QuartoFamilia) sobrescrevem este metodo
+    public Double calcularValorFinal(int qtdDiarias, int qtdHospedes) {
         double adicional = 0;
         if (possuiAR != null && possuiAR) adicional += 50;
         if (possuiHidro != null && possuiHidro) adicional += 80;
-        return (valorBase + adicional) * qtdDiarias;
+        return (calcularDiaria() + adicional) * qtdDiarias;
     }
 }

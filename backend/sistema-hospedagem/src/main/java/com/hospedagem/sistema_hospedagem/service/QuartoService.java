@@ -30,6 +30,15 @@ public class QuartoService {
         return quartoRepository.save(quarto);
     }
 
+    public Quarto atualizar(Long id, Quarto dados) {
+        Quarto existente = quartoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Quarto nao encontrado com id: " + id));
+        existente.setValorBase(dados.getValorBase());
+        existente.setPossuiAR(dados.getPossuiAR());
+        existente.setPossuiHidro(dados.getPossuiHidro());
+        return quartoRepository.save(existente);
+    }
+
     public void deletar(Long id) {
         quartoRepository.deleteById(id);
     }

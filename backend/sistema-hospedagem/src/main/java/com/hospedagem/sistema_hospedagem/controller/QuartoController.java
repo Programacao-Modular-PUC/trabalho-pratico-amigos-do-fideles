@@ -47,6 +47,16 @@ public class QuartoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Quarto> atualizar(@PathVariable Long id, @RequestBody Quarto quarto) {
+        try {
+            Quarto atualizado = quartoService.atualizar(id, quarto);
+            return ResponseEntity.ok(atualizado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         quartoService.deletar(id);

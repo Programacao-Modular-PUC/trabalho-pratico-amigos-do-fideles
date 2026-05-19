@@ -19,6 +19,7 @@ public class Aluguel {
     private LocalDateTime dataEntrada;
     private LocalDateTime dataSaida;
     private int qtdDiarias;
+    private int qtdHospedes;
     private Double valorFinal;
 
     @ManyToOne
@@ -32,9 +33,11 @@ public class Aluguel {
     public Aluguel() {
     }
 
-    public Aluguel(LocalDateTime dataEntrada, LocalDateTime dataSaida, Cliente cliente, Quarto quarto) {
+    public Aluguel(LocalDateTime dataEntrada, LocalDateTime dataSaida, int qtdHospedes,
+            Cliente cliente, Quarto quarto) {
         this.dataEntrada = dataEntrada;
         this.dataSaida = dataSaida;
+        this.qtdHospedes = qtdHospedes;
         this.cliente = cliente;
         this.quarto = quarto;
     }
@@ -69,6 +72,14 @@ public class Aluguel {
 
     public void setQtdDiarias(int qtdDiarias) {
         this.qtdDiarias = qtdDiarias;
+    }
+
+    public int getQtdHospedes() {
+        return qtdHospedes;
+    }
+
+    public void setQtdHospedes(int qtdHospedes) {
+        this.qtdHospedes = qtdHospedes;
     }
 
     public Double getValorFinal() {
@@ -120,7 +131,9 @@ public class Aluguel {
 
     public Double calcularValorFinal() {
         this.qtdDiarias = calcularDiarias();
-        this.valorFinal = quarto.calcularValorFinal(qtdDiarias);
+        // Passa qtdHospedes para o calculo — QuartoFamilia usa esse valor;
+        // os demais tipos ignoram e aplicam a logica padrao
+        this.valorFinal = quarto.calcularValorFinal(qtdDiarias, qtdHospedes);
         return valorFinal;
     }
 }

@@ -59,15 +59,18 @@ public class QuartoDuplo extends Quarto {
     @Override
     public Double calcularDiaria() {
         double total = getValorBase();
-
         if (adicionalConforto != null) {
             total += adicionalConforto;
         }
-
         if (possuiBerco != null && possuiBerco && taxaBerco != null) {
             total += taxaBerco;
         }
-
         return total;
+    }
+
+    // QuartoDuplo nao usa qtdHospedes no calculo — delega ao metodo padrao da superclasse
+    @Override
+    public Double calcularValorFinal(int qtdDiarias, int qtdHospedes) {
+        return super.calcularValorFinal(qtdDiarias, qtdHospedes);
     }
 }

@@ -41,18 +41,15 @@ public class AluguelService {
     }
 
     public Aluguel criar(Aluguel aluguel) {
-        // Valida cliente
         Cliente cliente = clienteRepository.findById(aluguel.getCliente().getId())
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado com id: " + aluguel.getCliente().getId()));
 
-        // Valida quarto
         Quarto quarto = quartoRepository.findById(aluguel.getQuarto().getId())
                 .orElseThrow(() -> new RuntimeException("Quarto não encontrado com id: " + aluguel.getQuarto().getId()));
 
         aluguel.setCliente(cliente);
         aluguel.setQuarto(quarto);
 
-        // Calcula automaticamente as diárias e valor final
         aluguel.calcularValorFinal();
 
         return aluguelRepository.save(aluguel);

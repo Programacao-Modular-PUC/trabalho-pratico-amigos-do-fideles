@@ -13,8 +13,12 @@ public class QuartoIndividual extends Quarto {
     public QuartoIndividual() {
     }
 
-    public QuartoIndividual(Double valorBase, Boolean possuiAR, Boolean possuiHidro, Residencia residencia, int quantidadeCamas, Double valorAdicionalPorCama) {
+    public QuartoIndividual(Double valorBase, Boolean possuiAR, Boolean possuiHidro, Residencia residencia,
+            int quantidadeCamas, Double valorAdicionalPorCama) {
         super(valorBase, possuiAR, possuiHidro, residencia);
+        if (quantidadeCamas < 1) {
+            throw new IllegalArgumentException("Quarto Individual deve ter ao menos 1 cama de solteiro.");
+        }
         this.quantidadeCamas = quantidadeCamas;
         this.valorAdicionalPorCama = valorAdicionalPorCama;
     }
@@ -24,6 +28,9 @@ public class QuartoIndividual extends Quarto {
     }
 
     public void setQuantidadeCamas(int quantidadeCamas) {
+        if (quantidadeCamas < 1) {
+            throw new IllegalArgumentException("Quarto Individual deve ter ao menos 1 cama de solteiro.");
+        }
         this.quantidadeCamas = quantidadeCamas;
     }
 
@@ -35,6 +42,11 @@ public class QuartoIndividual extends Quarto {
         this.valorAdicionalPorCama = valorAdicionalPorCama;
     }
 
+    // Quarto Individual nao possui berco — limite de hospedes proporcional as camas
+    public int getLimiteHospedes() {
+        return quantidadeCamas;
+    }
+
     @Override
     public Double calcularDiaria() {
         double adicional = 0;
@@ -42,5 +54,11 @@ public class QuartoIndividual extends Quarto {
             adicional = (quantidadeCamas - 1) * valorAdicionalPorCama;
         }
         return getValorBase() + adicional;
+    }
+
+    // QuartoIndividual nao usa qtdHospedes no calculo — delega ao metodo padrao da superclasse
+    @Override
+    public Double calcularValorFinal(int qtdDiarias, int qtdHospedes) {
+        return super.calcularValorFinal(qtdDiarias, qtdHospedes);
     }
 }
