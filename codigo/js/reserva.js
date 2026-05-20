@@ -4,6 +4,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const residenciaId = urlParams.get('residenciaId');
 const quartoId = urlParams.get('quartoId');
 const precoDiaria = parseFloat(urlParams.get('preco')) || 0;
+const tipoQuarto = urlParams.get('tipo') || 'individual';
 
 async function carregarResumo() {
     try {
@@ -45,7 +46,7 @@ function calcularTotal() {
         if (diferencaDias > 0) {
             const total = diferencaDias * precoDiaria;
             document.getElementById('totalExibido').innerText = `R$ ${total.toFixed(2)}`;
-            document.getElementById('legendaDias').innerText = `Cálculo para ${diferencaDias} diária(s)`;
+            document.getElementById('legendaDias').innerText = `Cálculo para ${Math.ceil(diferencaDias)} diária(s)`;
         } else {
             document.getElementById('totalExibido').innerText = 'R$ 0,00';
             document.getElementById('legendaDias').innerText = 'A data de saída deve ser maior que a de entrada';
@@ -74,14 +75,15 @@ async function confirmarAluguel() {
     const aluguel = {
         dataEntrada: `${dataEntrada}T${horaEntrada}:00`,
         dataSaida: `${dataSaida}T${horaSaida}:00`,
-        cliente: { id: clienteId },
-        quarto: { id: quartoId }
+        cliente: { id: parseInt(clienteId) },
+        quarto: { id: parseInt(quartoId), tipo: tipoQuarto }
     };
 
     try {
         const response = await fetch(`${API_URL}/alugueis`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
             body: JSON.stringify(aluguel)
         });
 

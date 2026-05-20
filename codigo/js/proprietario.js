@@ -65,7 +65,8 @@ async function salvarResidencia() {
         bairro: document.getElementById('rBairro').value,
         cep: document.getElementById('rCep').value,
         telefone: document.getElementById('rTelefone').value,
-        email: document.getElementById('rEmail').value
+        email: document.getElementById('rEmail').value,
+        fotoUrl: document.getElementById('rFotoUrl').value
     };
 
     if (!body.endereco || !body.bairro) {

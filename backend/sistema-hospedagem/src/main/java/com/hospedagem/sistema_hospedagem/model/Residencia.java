@@ -23,6 +23,7 @@ public class Residencia {
     private String cep;
     private String telefone;
     private String email;
+    private String fotoUrl;
 
     @JsonIgnore
     @OneToMany(mappedBy = "residencia", cascade = CascadeType.ALL)
@@ -102,5 +103,13 @@ public class Residencia {
 
     public void setQuartos(List<Quarto> quartos) {
         this.quartos = quartos;
+    }
+
+    public String getFotoUrl() {
+        return fotoUrl;
+    }
+
+    public void setFotoUrl(String fotoUrl) {
+        this.fotoUrl = fotoUrl;
     }
 }

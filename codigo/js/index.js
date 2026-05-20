@@ -49,6 +49,23 @@ function filtrarResidencias() {
             card.style.display = 'none';
         }
     });
+
+    residencias.forEach(residencia => {
+        const foto = residencia.fotoUrl || 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=500';
+        const col = document.createElement('div');
+        col.className = 'col-md-4';
+        col.innerHTML = `
+        <div class="residencia-card">
+            <img src="${foto}" class="residencia-img" alt="${residencia.endereco}">
+            <div class="residencia-content text-start">
+                <div class="residencia-local">${residencia.bairro || ''}, Maraú</div>
+                <h5 class="residencia-title">${residencia.endereco}</h5>
+                <a href="detalhes.html?id=${residencia.id}" class="btn-card">Ver Quartos</a>
+            </div>
+        </div>
+    `;
+        container.appendChild(col);
+    });
 }
 
 document.querySelector('.btn-search').addEventListener('click', filtrarResidencias);

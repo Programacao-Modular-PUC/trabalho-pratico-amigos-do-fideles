@@ -9,11 +9,11 @@ async function carregarResidencia() {
         const residencia = await response.json();
 
         document.getElementById('nomeResidencia').innerText = residencia.endereco;
-        document.getElementById('enderecoResidencia').innerHTML = 
+        document.getElementById('enderecoResidencia').innerHTML =
             `<i class="bi bi-geo-alt"></i> ${residencia.bairro || ''} - CEP: ${residencia.cep || ''}`;
         document.getElementById('descricaoResidencia').innerText = residencia.email || '';
-        document.getElementById('fotoPrincipal').src = 
-            'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800';
+        document.getElementById('fotoPrincipal').src =
+            residencia.fotoUrl || 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800';
 
         await carregarQuartos();
 
@@ -37,8 +37,8 @@ async function carregarQuartos() {
         }
 
         quartos.forEach(quarto => {
-            const diaria = quarto.calcularDiaria || quarto.valorBase;
             const tipo = getTipoQuarto(quarto);
+            const tipoParam = getTipoParam(quarto);
             const tags = getTags(quarto);
 
             const card = document.createElement('div');
@@ -51,7 +51,7 @@ async function carregarQuartos() {
                     </div>
                     <div class="col-4 text-end">
                         <span class="valor-base">R$ ${quarto.valorBase?.toFixed(2)}</span><br>
-                        <a href="reserva.html?residenciaId=${idResidencia}&quartoId=${quarto.id}&preco=${quarto.valorBase}" 
+                        <a href="reserva.html?residenciaId=${idResidencia}&quartoId=${quarto.id}&preco=${quarto.valorBase}&tipo=${tipoParam}" 
                            class="btn-reservar-quarto btn-reserva">Escolher</a>
                     </div>
                 </div>
@@ -69,6 +69,13 @@ function getTipoQuarto(quarto) {
     if (quarto.tipoCama !== undefined) return `Quarto Duplo (${quarto.tipoCama})`;
     if (quarto.capacidadeMaxima !== undefined) return 'Quarto Família';
     return 'Quarto';
+}
+
+function getTipoParam(quarto) {
+    if (quarto.quantidadeCamas !== undefined) return 'individual';
+    if (quarto.tipoCama !== undefined) return 'duplo';
+    if (quarto.capacidadeMaxima !== undefined) return 'familia';
+    return 'individual';
 }
 
 function getTags(quarto) {

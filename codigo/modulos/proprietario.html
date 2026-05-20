@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../css/proprietario.css">
 </head>
+
 <body>
 
     <nav class="navbar navbar-fideles">
@@ -105,6 +107,11 @@
                         <label class="form-label-custom">E-mail</label>
                         <input type="email" id="rEmail" class="input-form" placeholder="contato@pousada.com">
                     </div>
+                    <div class="col-12">
+                        <label class="form-label-custom">URL da Foto</label>
+                        <input type="text" id="rFotoUrl" class="input-form"
+                            placeholder="https://link-da-imagem.com/foto.jpg">
+                    </div>
                 </div>
             </div>
             <div class="modal-footer-custom">
@@ -167,7 +174,8 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label-custom">Valor Adicional por Cama (R$)</label>
-                                <input type="number" id="fValorAdicionalCama" class="input-form" placeholder="50.00" step="0.01">
+                                <input type="number" id="fValorAdicionalCama" class="input-form" placeholder="50.00"
+                                    step="0.01">
                             </div>
                         </div>
                     </div>
@@ -186,7 +194,8 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label-custom">Adicional por Conforto (R$)</label>
-                                <input type="number" id="fAdicionalConforto" class="input-form" placeholder="80.00" step="0.01">
+                                <input type="number" id="fAdicionalConforto" class="input-form" placeholder="80.00"
+                                    step="0.01">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label-custom">Possui Berço</label>
@@ -212,15 +221,18 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label-custom">Quantidade de Ambientes</label>
-                                <input type="number" id="fQuantidadeAmbientes" class="input-form" min="1" placeholder="2">
+                                <input type="number" id="fQuantidadeAmbientes" class="input-form" min="1"
+                                    placeholder="2">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label-custom">Valor por Hóspede (R$)</label>
-                                <input type="number" id="fValorPorHospede" class="input-form" placeholder="50.00" step="0.01">
+                                <input type="number" id="fValorPorHospede" class="input-form" placeholder="50.00"
+                                    step="0.01">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label-custom">Percentual Adicional (%)</label>
-                                <input type="number" id="fPercentualAdicional" class="input-form" placeholder="10" step="0.01">
+                                <input type="number" id="fPercentualAdicional" class="input-form" placeholder="10"
+                                    step="0.01">
                             </div>
                         </div>
                     </div>
@@ -239,4 +251,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/proprietario.js"></script>
 </body>
+
 </html>

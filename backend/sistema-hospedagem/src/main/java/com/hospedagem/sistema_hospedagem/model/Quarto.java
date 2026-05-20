@@ -9,10 +9,19 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "quartos")
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "tipo")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = QuartoIndividual.class, name = "individual"),
+    @JsonSubTypes.Type(value = QuartoDuplo.class, name = "duplo"),
+    @JsonSubTypes.Type(value = QuartoFamilia.class, name = "familia")
+})
 public abstract class Quarto {
 
     @Id
