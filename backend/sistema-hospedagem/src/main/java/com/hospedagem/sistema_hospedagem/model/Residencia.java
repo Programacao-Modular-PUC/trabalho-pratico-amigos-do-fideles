@@ -1,5 +1,6 @@
 package com.hospedagem.sistema_hospedagem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +24,7 @@ public class Residencia {
     private String telefone;
     private String email;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "residencia", cascade = CascadeType.ALL)
     private List<Quarto> quartos;
 

@@ -27,14 +27,11 @@
     <header class="py-5 text-center container">
         <div class="row py-lg-4">
             <div class="col-lg-8 mx-auto">
-                <h1 class="fw-bold" style="color: var(--primary-marrom); font-family: 'Georgia', serif;">Onde você quer
-                    relaxar?</h1>
+                <h1 class="fw-bold" style="color: var(--primary-marrom); font-family: 'Georgia', serif;">Onde você quer relaxar?</h1>
                 <p class="lead text-muted">Explore nossas residências exclusivas na Península de Maraú.</p>
-
                 <div class="search-container">
                     <div class="input-group">
-                        <input type="text" class="form-control search-input"
-                            placeholder="Buscar por bairro em Maraú...">
+                        <input type="text" class="form-control search-input" placeholder="Buscar por bairro em Maraú...">
                         <button class="btn btn-search" type="button">Buscar</button>
                     </div>
                 </div>
@@ -44,43 +41,7 @@
 
     <main class="container mb-5">
         <div class="row g-4">
-
-            <div class="col-md-4">
-                <div class="residencia-card">
-                    <img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=500" class="residencia-img"
-                        alt="Pousada">
-                    <div class="residencia-content text-start">
-                        <div class="residencia-local">Barra Grande, Maraú</div>
-                        <h5 class="residencia-title">Pousada Recanto do Sol</h5>
-                        <a href="detalhes.html?id=pousada" class="btn-card">Ver Quartos</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="residencia-card">
-                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=500" class="residencia-img"
-                        alt="Villa">
-                    <div class="residencia-content text-start">
-                        <div class="residencia-local">Taipu de Fora</div>
-                        <h5 class="residencia-title">Villa das Chaves</h5>
-                        <a href="detalhes.html?id=villa" class="btn-card">Ver Quartos</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="residencia-card">
-                    <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=500" class="residencia-img"
-                        alt="Bangalô">
-                    <div class="residencia-content text-start">
-                        <div class="residencia-local">Algodões</div>
-                        <h5 class="residencia-title">Bangalô do Fideles</h5>
-                        <a href="detalhes.html?id=bangalo" class="btn-card">Ver Quartos</a>
-                    </div>
-                </div>
-            </div>
-
+            <p class="text-center text-muted">Carregando residências...</p>
         </div>
     </main>
 
@@ -89,23 +50,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>//pesquisa
-        document.querySelector('.btn-search').addEventListener('click', function () {
-            const termoBusca = document.querySelector('.search-input').value.toLowerCase();
-            const cards = document.querySelectorAll('.col-md-4');
-
-            cards.forEach(card => {
-                const titulo = card.querySelector('.residencia-title').innerText.toLowerCase();
-                const local = card.querySelector('.residencia-local').innerText.toLowerCase();
-
-                if (titulo.includes(termoBusca) || local.includes(termoBusca)) {
-                    card.style.display = "block";
-                } else {
-                    card.style.display = "none";
-                }
-            });
-        });
-    </script>
+    <script src="../js/index.js"></script>
 </body>
 
 </html>

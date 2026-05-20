@@ -4,7 +4,6 @@ import com.hospedagem.sistema_hospedagem.model.Quarto;
 import com.hospedagem.sistema_hospedagem.repository.QuartoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -30,13 +29,13 @@ public class QuartoService {
         return quartoRepository.save(quarto);
     }
 
-    public Quarto atualizar(Long id, Quarto dados) {
-        Quarto existente = quartoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Quarto nao encontrado com id: " + id));
-        existente.setValorBase(dados.getValorBase());
-        existente.setPossuiAR(dados.getPossuiAR());
-        existente.setPossuiHidro(dados.getPossuiHidro());
-        return quartoRepository.save(existente);
+    public Quarto atualizar(Long id, Quarto quartoAtualizado) {
+        Quarto quarto = quartoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Quarto não encontrado"));
+        quarto.setValorBase(quartoAtualizado.getValorBase());
+        quarto.setPossuiAR(quartoAtualizado.getPossuiAR());
+        quarto.setPossuiHidro(quartoAtualizado.getPossuiHidro());
+        return quartoRepository.save(quarto);
     }
 
     public void deletar(Long id) {

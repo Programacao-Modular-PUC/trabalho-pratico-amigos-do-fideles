@@ -112,13 +112,12 @@ public class Aluguel {
         int diarias = 0;
         LocalDateTime entrada = dataEntrada;
 
-        // entrada apos 12h conta como diaria completa
+
         if (dataEntrada.getHour() > 12) {
             diarias++;
             entrada = dataEntrada.plusDays(1).withHour(12).withMinute(0);
         }
 
-        // saida apos 12h adiciona nova diaria
         LocalDateTime saida = dataSaida;
         if (dataSaida.getHour() > 12) {
             diarias++;
@@ -131,8 +130,6 @@ public class Aluguel {
 
     public Double calcularValorFinal() {
         this.qtdDiarias = calcularDiarias();
-        // Passa qtdHospedes para o calculo — QuartoFamilia usa esse valor;
-        // os demais tipos ignoram e aplicam a logica padrao
         this.valorFinal = quarto.calcularValorFinal(qtdDiarias, qtdHospedes);
         return valorFinal;
     }

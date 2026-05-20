@@ -10,7 +10,7 @@ public class QuartoFamilia extends Quarto {
     private int capacidadeMaxima;
     private int quantidadeAmbientes;
     private Double valorPorHospede;
-    private Double percentualAdicional; // percentual a mais sobre o valor base por hospede
+    private Double percentualAdicional;
 
     public QuartoFamilia() {
     }
@@ -56,41 +56,34 @@ public class QuartoFamilia extends Quarto {
         this.percentualAdicional = percentualAdicional;
     }
 
-    // Calculo base sem hospedes (exigido pela assinatura abstrata)
-    // Para QuartoFamilia, o calculo real e feito em calcularValorFinal()
     @Override
     public Double calcularDiaria() {
+
         return getValorBase() * (1 + percentualAdicional / 100);
     }
 
-    // Calculo da diaria considerando numero de hospedes
     public Double calcularDiariaComHospedes(int qtdHospedes) {
-        double diaria = getValorBase() * (1 + percentualAdicional / 100);
-        diaria += qtdHospedes * valorPorHospede;
-        return diaria;
+        double valorComPercentual = getValorBase() * (1 + (percentualAdicional / 100) * qtdHospedes);
+
+        // Adicional por hospede
+        double totalHospedes = qtdHospedes * valorPorHospede;
+
+        double total = valorComPercentual + totalHospedes;
+
+        // Desconto progressivo para grupos
+        double desconto = calcularDescontoProgressivo(qtdHospedes);
+        total = total * (1 - desconto);
+
+        return total;
     }
 
-    // Retorna o percentual de desconto para grupos (0.0 a 1.0)
-    // Desconto progressivo: 5% para metade da capacidade, 10% para capacidade cheia
-    public double calcularDesconto(int qtdHospedes) {
-        if (qtdHospedes >= capacidadeMaxima) {
-            return 0.10;
-        }
-        if (qtdHospedes >= capacidadeMaxima / 2) {
-            return 0.05;
-        }
-        return 0.0;
-    }
+    public double calcularDescontoProgressivo(int qtdHospedes) {
+        double proporcao = (double) qtdHospedes / capacidadeMaxima;
 
-    // Sobrescreve o calculo final aplicando hospedes e desconto progressivo
-    @Override
-    public Double calcularValorFinal(int qtdDiarias, int qtdHospedes) {
-        double adicionalComodidades = 0;
-        if (getPossuiAR() != null && getPossuiAR()) adicionalComodidades += 50;
-        if (getPossuiHidro() != null && getPossuiHidro()) adicionalComodidades += 80;
-
-        double diaria = calcularDiariaComHospedes(qtdHospedes) + adicionalComodidades;
-        double desconto = calcularDesconto(qtdHospedes);
-        return diaria * qtdDiarias * (1 - desconto);
+        if (qtdHospedes < 3) return 0.0;
+        if (proporcao < 0.5) return 0.05;
+        if (proporcao < 0.75) return 0.10;
+        if (proporcao < 1.0) return 0.15;
+        return 0.20;
     }
 }

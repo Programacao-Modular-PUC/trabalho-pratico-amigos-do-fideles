@@ -4,7 +4,6 @@ import com.hospedagem.sistema_hospedagem.model.Cliente;
 import com.hospedagem.sistema_hospedagem.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -31,16 +30,14 @@ public class ClienteService {
     }
 
     public Cliente atualizar(Long id, Cliente clienteAtualizado) {
-        Cliente existente = clienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado com id: " + id));
-
-        existente.setNome(clienteAtualizado.getNome());
-        existente.setCpf(clienteAtualizado.getCpf());
-        existente.setEndereco(clienteAtualizado.getEndereco());
-        existente.setTelefone(clienteAtualizado.getTelefone());
-        existente.setEmail(clienteAtualizado.getEmail());
-
-        return clienteRepository.save(existente);
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        cliente.setNome(clienteAtualizado.getNome());
+        cliente.setCpf(clienteAtualizado.getCpf());
+        cliente.setEndereco(clienteAtualizado.getEndereco());
+        cliente.setTelefone(clienteAtualizado.getTelefone());
+        cliente.setEmail(clienteAtualizado.getEmail());
+        return clienteRepository.save(cliente);
     }
 
     public void deletar(Long id) {

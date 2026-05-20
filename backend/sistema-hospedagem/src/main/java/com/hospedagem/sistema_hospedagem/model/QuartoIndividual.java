@@ -56,7 +56,6 @@ public class QuartoIndividual extends Quarto {
         return getValorBase() + adicional;
     }
 
-    // QuartoIndividual nao usa qtdHospedes no calculo — delega ao metodo padrao da superclasse
     @Override
     public Double calcularValorFinal(int qtdDiarias, int qtdHospedes) {
         return super.calcularValorFinal(qtdDiarias, qtdHospedes);

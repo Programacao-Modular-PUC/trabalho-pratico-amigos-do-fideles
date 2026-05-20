@@ -10,7 +10,7 @@ public class QuartoDuplo extends Quarto {
     private String tipoCama; // "CASAL", "QUEEN", "KING"
     private Boolean possuiBerco;
     private Double taxaBerco;
-    private Double adicionalConforto; // adicional por tipo de cama
+    private Double adicionalConforto; 
 
     public QuartoDuplo() {
     }
@@ -68,7 +68,6 @@ public class QuartoDuplo extends Quarto {
         return total;
     }
 
-    // QuartoDuplo nao usa qtdHospedes no calculo — delega ao metodo padrao da superclasse
     @Override
     public Double calcularValorFinal(int qtdDiarias, int qtdHospedes) {
         return super.calcularValorFinal(qtdDiarias, qtdHospedes);

@@ -3,7 +3,6 @@ package com.hospedagem.sistema_hospedagem.repository;
 import com.hospedagem.sistema_hospedagem.model.Quarto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository

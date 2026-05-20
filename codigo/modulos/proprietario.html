@@ -23,48 +23,37 @@
 
         <div class="painel-header">
             <div>
-                <h2 class="painel-titulo">Gerenciar Acomodações</h2>
-                <p class="painel-sub">Cadastre, edite e remova os quartos disponíveis para reserva</p>
+                <h2 class="painel-titulo">Residências</h2>
+                <p class="painel-sub">Gerencie as residências cadastradas</p>
             </div>
-            <button class="btn-novo" onclick="abrirModal()">
-                <i class="bi bi-plus-lg"></i> Nova Acomodação
+            <button class="btn-novo" onclick="abrirModalResidencia()">
+                <i class="bi bi-plus-lg"></i> Nova Residência
             </button>
         </div>
 
-        <div class="stats-row">
-            <div class="stat-card">
-                <div class="stat-icon"><i class="bi bi-house-door"></i></div>
-                <div>
-                    <div class="stat-valor" id="totalQuartos">0</div>
-                    <div class="stat-label">Acomodações</div>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="bi bi-check-circle"></i></div>
-                <div>
-                    <div class="stat-valor" id="totalDisponiveis">0</div>
-                    <div class="stat-label">Disponíveis</div>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="bi bi-currency-dollar"></i></div>
-                <div>
-                    <div class="stat-valor" id="menorDiaria">—</div>
-                    <div class="stat-label">Menor Diária</div>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="bi bi-graph-up"></i></div>
-                <div>
-                    <div class="stat-valor" id="maiorDiaria">—</div>
-                    <div class="stat-label">Maior Diária</div>
-                </div>
-            </div>
+        <div class="tabela-wrap mb-5">
+            <table class="tabela-crud">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Endereço</th>
+                        <th>Bairro</th>
+                        <th>Telefone</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="corpoTabelaResidencias"></tbody>
+            </table>
         </div>
 
-        <div class="busca-wrap">
-            <i class="bi bi-search busca-icon"></i>
-            <input type="text" id="campoBusca" class="input-busca" placeholder="Buscar por nome, tipo ou residência..." oninput="renderTabela()">
+        <div class="painel-header">
+            <div>
+                <h2 class="painel-titulo">Quartos</h2>
+                <p class="painel-sub">Gerencie os quartos por tipo</p>
+            </div>
+            <button class="btn-novo" onclick="abrirModalQuarto()">
+                <i class="bi bi-plus-lg"></i> Novo Quarto
+            </button>
         </div>
 
         <div class="tabela-wrap">
@@ -72,116 +61,175 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Acomodação</th>
-                        <th>Residência</th>
                         <th>Tipo</th>
-                        <th>Capacidade</th>
-                        <th>Diária</th>
-                        <th>Status</th>
+                        <th>Residência</th>
+                        <th>Diária Base</th>
+                        <th>Comodidades</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody id="corpoTabela">
-                </tbody>
+                <tbody id="corpoTabelaQuartos"></tbody>
             </table>
-            <div id="semDados" class="sem-dados" style="display:none;">
-                <i class="bi bi-inbox" style="font-size:2.5rem; color:#ccc;"></i>
-                <p>Nenhuma acomodação encontrada.</p>
-            </div>
         </div>
     </div>
 
-    <div class="modal-overlay" id="modalOverlay" onclick="fecharModalFora(event)">
+    <div class="modal-overlay" id="modalResidencia">
         <div class="modal-box">
             <div class="modal-header">
-                <h5 class="modal-titulo" id="modalTitulo">Nova Acomodação</h5>
-                <button class="modal-fechar" onclick="fecharModal()"><i class="bi bi-x-lg"></i></button>
+                <h5 class="modal-titulo">Nova Residência</h5>
+                <button class="modal-fechar" onclick="fecharModalResidencia()"><i class="bi bi-x-lg"></i></button>
             </div>
-
             <div class="modal-body-custom">
-                <input type="hidden" id="editIndex" value="">
-
                 <div class="row g-3">
                     <div class="col-md-8">
-                        <label class="form-label-custom">Nome da Acomodação *</label>
-                        <input type="text" id="fNome" class="input-form" placeholder="Ex: Quarto de Casal com Hidro">
+                        <label class="form-label-custom">Endereço *</label>
+                        <input type="text" id="rEndereco" class="input-form" placeholder="Rua Principal">
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label-custom">Tipo *</label>
-                        <select id="fTipo" class="input-form">
-                            <option value="">Selecione...</option>
-                            <option>Quarto Simples</option>
-                            <option>Quarto de Casal</option>
-                            <option>Suíte</option>
-                            <option>Chalé</option>
-                            <option>Bangalô</option>
-                            <option>Apartamento</option>
-                        </select>
+                        <label class="form-label-custom">Número</label>
+                        <input type="text" id="rNumero" class="input-form" placeholder="123">
                     </div>
-                    <div class="col-md-8">
-                        <label class="form-label-custom">Residência / Pousada *</label>
-                        <input type="text" id="fResidencia" class="input-form" placeholder="Ex: Pousada Recanto do Sol">
+                    <div class="col-md-6">
+                        <label class="form-label-custom">Bairro *</label>
+                        <input type="text" id="rBairro" class="input-form" placeholder="Barra Grande">
                     </div>
-                    <div class="col-md-4">
-                        <label class="form-label-custom">Capacidade (pessoas)</label>
-                        <input type="number" id="fCapacidade" class="input-form" min="1" max="20" placeholder="2">
+                    <div class="col-md-6">
+                        <label class="form-label-custom">CEP</label>
+                        <input type="text" id="rCep" class="input-form" placeholder="00000-000">
                     </div>
-                    <div class="col-md-4">
-                        <label class="form-label-custom">Valor da Diária (R$) *</label>
-                        <input type="number" id="fPreco" class="input-form" min="0" step="0.01" placeholder="450.00">
+                    <div class="col-md-6">
+                        <label class="form-label-custom">Telefone</label>
+                        <input type="text" id="rTelefone" class="input-form" placeholder="(00) 00000-0000">
                     </div>
-                    <div class="col-md-4">
-                        <label class="form-label-custom">Status</label>
-                        <select id="fStatus" class="input-form">
-                            <option value="Disponível">Disponível</option>
-                            <option value="Indisponível">Indisponível</option>
-                            <option value="Manutenção">Manutenção</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label-custom">Área (m²)</label>
-                        <input type="number" id="fArea" class="input-form" min="0" placeholder="25">
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label-custom">Comodidades</label>
-                        <div class="comodidades-grid">
-                            <label class="check-item"><input type="checkbox" value="Ar-condicionado"> Ar-condicionado</label>
-                            <label class="check-item"><input type="checkbox" value="Hidromassagem"> Hidromassagem</label>
-                            <label class="check-item"><input type="checkbox" value="Wi-Fi"> Wi-Fi</label>
-                            <label class="check-item"><input type="checkbox" value="TV"> TV</label>
-                            <label class="check-item"><input type="checkbox" value="Frigobar"> Frigobar</label>
-                            <label class="check-item"><input type="checkbox" value="Varanda"> Varanda</label>
-                            <label class="check-item"><input type="checkbox" value="Piscina"> Piscina</label>
-                            <label class="check-item"><input type="checkbox" value="Café da manhã"> Café da manhã</label>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <label class="form-label-custom">Descrição</label>
-                        <textarea id="fDescricao" class="input-form" rows="3" placeholder="Descreva a acomodação..."></textarea>
+                    <div class="col-md-6">
+                        <label class="form-label-custom">E-mail</label>
+                        <input type="email" id="rEmail" class="input-form" placeholder="contato@pousada.com">
                     </div>
                 </div>
             </div>
-
             <div class="modal-footer-custom">
-                <button class="btn-cancelar" onclick="fecharModal()">Cancelar</button>
-                <button class="btn-salvar" onclick="salvar()"><i class="bi bi-check-lg"></i> Salvar</button>
+                <button class="btn-cancelar" onclick="fecharModalResidencia()">Cancelar</button>
+                <button class="btn-salvar" onclick="salvarResidencia()"><i class="bi bi-check-lg"></i> Salvar</button>
             </div>
         </div>
     </div>
 
-    <div class="modal-overlay" id="modalExcluir" onclick="fecharExclusaoFora(event)">
-        <div class="modal-box modal-pequeno">
+    <div class="modal-overlay" id="modalQuarto">
+        <div class="modal-box">
             <div class="modal-header">
-                <h5 class="modal-titulo">Excluir Acomodação</h5>
-                <button class="modal-fechar" onclick="fecharExclusao()"><i class="bi bi-x-lg"></i></button>
+                <h5 class="modal-titulo">Novo Quarto</h5>
+                <button class="modal-fechar" onclick="fecharModalQuarto()"><i class="bi bi-x-lg"></i></button>
             </div>
-            <div class="modal-body-custom" style="text-align:center; padding: 30px 24px;">
-                <i class="bi bi-trash3" style="font-size:3rem; color:#c0392b;"></i>
-                <p style="margin-top:16px; color:#555;">Tem certeza que deseja excluir <strong id="nomeExcluir"></strong>? Esta ação não pode ser desfeita.</p>
+            <div class="modal-body-custom">
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label class="form-label-custom">Tipo de Quarto *</label>
+                        <select id="fTipo" class="input-form" onchange="mostrarCamposTipo()">
+                            <option value="">Selecione...</option>
+                            <option value="individual">Individual</option>
+                            <option value="duplo">Duplo (Casal)</option>
+                            <option value="familia">Família</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label-custom">Residência *</label>
+                        <select id="fResidenciaId" class="input-form">
+                            <option value="">Selecione a residência...</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label-custom">Valor Base (R$) *</label>
+                        <input type="number" id="fValorBase" class="input-form" placeholder="300.00" step="0.01">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label-custom">Ar-condicionado</label>
+                        <div class="form-check mt-2">
+                            <input type="checkbox" id="fAR" class="form-check-input">
+                            <label class="form-check-label" for="fAR">Possui AR</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label-custom">Hidromassagem</label>
+                        <div class="form-check mt-2">
+                            <input type="checkbox" id="fHidro" class="form-check-input">
+                            <label class="form-check-label" for="fHidro">Possui Hidro</label>
+                        </div>
+                    </div>
+
+                    <div id="camposIndividual" style="display:none;" class="col-12">
+                        <hr>
+                        <h6 class="mb-3">Configurações do Quarto Individual</h6>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Quantidade de Camas *</label>
+                                <input type="number" id="fQuantidadeCamas" class="input-form" min="1" placeholder="1">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Valor Adicional por Cama (R$)</label>
+                                <input type="number" id="fValorAdicionalCama" class="input-form" placeholder="50.00" step="0.01">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="camposDuplo" style="display:none;" class="col-12">
+                        <hr>
+                        <h6 class="mb-3">Configurações do Quarto Duplo</h6>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Tipo de Cama *</label>
+                                <select id="fTipoCama" class="input-form">
+                                    <option value="CASAL">Casal</option>
+                                    <option value="QUEEN">Queen</option>
+                                    <option value="KING">King</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Adicional por Conforto (R$)</label>
+                                <input type="number" id="fAdicionalConforto" class="input-form" placeholder="80.00" step="0.01">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Possui Berço</label>
+                                <div class="form-check mt-2">
+                                    <input type="checkbox" id="fBerco" class="form-check-input">
+                                    <label class="form-check-label" for="fBerco">Tem berço disponível</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Taxa do Berço (R$)</label>
+                                <input type="number" id="fTaxaBerco" class="input-form" placeholder="30.00" step="0.01">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="camposFamilia" style="display:none;" class="col-12">
+                        <hr>
+                        <h6 class="mb-3">Configurações do Quarto Família</h6>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Capacidade Máxima *</label>
+                                <input type="number" id="fCapacidadeMaxima" class="input-form" min="1" placeholder="6">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Quantidade de Ambientes</label>
+                                <input type="number" id="fQuantidadeAmbientes" class="input-form" min="1" placeholder="2">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Valor por Hóspede (R$)</label>
+                                <input type="number" id="fValorPorHospede" class="input-form" placeholder="50.00" step="0.01">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label-custom">Percentual Adicional (%)</label>
+                                <input type="number" id="fPercentualAdicional" class="input-form" placeholder="10" step="0.01">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
             <div class="modal-footer-custom">
-                <button class="btn-cancelar" onclick="fecharExclusao()">Cancelar</button>
-                <button class="btn-excluir" onclick="confirmarExclusao()"><i class="bi bi-trash3"></i> Excluir</button>
+                <button class="btn-cancelar" onclick="fecharModalQuarto()">Cancelar</button>
+                <button class="btn-salvar" onclick="salvarQuarto()"><i class="bi bi-check-lg"></i> Salvar</button>
             </div>
         </div>
     </div>
@@ -189,193 +237,6 @@
     <div class="toast-custom" id="toast"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        let acomodacoes = JSON.parse(localStorage.getItem('acomodacoes') || '[]');
-
-        if (acomodacoes.length === 0) {
-            acomodacoes = [
-                { nome: 'Quarto de Casal (Hidro Ar)', residencia: 'Pousada Recanto do Sol', tipo: 'Quarto de Casal', capacidade: 2, preco: 450, status: 'Disponível', area: 28, comodidades: ['Ar-condicionado','Hidromassagem','Wi-Fi','TV'], descricao: 'Quarto aconchegante com hidromassagem e ar-condicionado.' },
-                { nome: 'Suíte Master', residencia: 'Pousada Recanto do Sol', tipo: 'Suíte', capacidade: 2, preco: 680, status: 'Disponível', area: 40, comodidades: ['Ar-condicionado','Frigobar','Varanda','Wi-Fi'], descricao: 'Suíte espaçosa com varanda e frigobar.' },
-                { nome: 'Chalé Familiar', residencia: 'Chalés do Morro', tipo: 'Chalé', capacidade: 5, preco: 890, status: 'Indisponível', area: 65, comodidades: ['Wi-Fi','TV','Piscina','Café da manhã'], descricao: 'Chalé completo para famílias, com piscina privativa.' },
-            ];
-            salvarLocal();
-        }
-
-        function renderTabela() {
-            const busca = document.getElementById('campoBusca').value.toLowerCase();
-            const tbody = document.getElementById('corpoTabela');
-            const semDados = document.getElementById('semDados');
-
-            const filtrados = acomodacoes.filter(a =>
-                a.nome.toLowerCase().includes(busca) ||
-                a.residencia.toLowerCase().includes(busca) ||
-                a.tipo.toLowerCase().includes(busca)
-            );
-
-            tbody.innerHTML = '';
-
-            if (filtrados.length === 0) {
-                semDados.style.display = 'flex';
-                atualizarStats();
-                return;
-            }
-            semDados.style.display = 'none';
-
-            filtrados.forEach((a, i) => {
-                const indexReal = acomodacoes.indexOf(a);
-                const statusClass = a.status === 'Disponível' ? 'badge-disp' : a.status === 'Manutenção' ? 'badge-manut' : 'badge-indisp';
-                tbody.innerHTML += `
-                    <tr class="linha-tabela">
-                        <td class="td-id">${indexReal + 1}</td>
-                        <td>
-                            <div class="td-nome">${a.nome}</div>
-                            <div class="td-desc">${(a.descricao || '').substring(0, 50)}${a.descricao && a.descricao.length > 50 ? '...' : ''}</div>
-                        </td>
-                        <td>${a.residencia}</td>
-                        <td><span class="tag-tipo">${a.tipo}</span></td>
-                        <td><i class="bi bi-people"></i> ${a.capacidade || '—'}</td>
-                        <td class="td-preco">R$ ${parseFloat(a.preco).toLocaleString('pt-BR', {minimumFractionDigits:2})}</td>
-                        <td><span class="badge-status ${statusClass}">${a.status}</span></td>
-                        <td>
-                            <button class="btn-acao btn-editar" onclick="abrirEdicao(${indexReal})" title="Editar"><i class="bi bi-pencil"></i></button>
-                            <button class="btn-acao btn-del" onclick="abrirExclusao(${indexReal})" title="Excluir"><i class="bi bi-trash3"></i></button>
-                        </td>
-                    </tr>`;
-            });
-
-            atualizarStats();
-        }
-
-        function atualizarStats() {
-            document.getElementById('totalQuartos').textContent = acomodacoes.length;
-            const disp = acomodacoes.filter(a => a.status === 'Disponível').length;
-            document.getElementById('totalDisponiveis').textContent = disp;
-            if (acomodacoes.length > 0) {
-                const precos = acomodacoes.map(a => parseFloat(a.preco));
-                document.getElementById('menorDiaria').textContent = 'R$ ' + Math.min(...precos).toLocaleString('pt-BR', {minimumFractionDigits:2});
-                document.getElementById('maiorDiaria').textContent  = 'R$ ' + Math.max(...precos).toLocaleString('pt-BR', {minimumFractionDigits:2});
-            }
-        }
-
-        function abrirModal() {
-            document.getElementById('modalTitulo').textContent = 'Nova Acomodação';
-            document.getElementById('editIndex').value = '';
-            limparForm();
-            document.getElementById('modalOverlay').classList.add('ativo');
-        }
-
-        function abrirEdicao(i) {
-            const a = acomodacoes[i];
-            document.getElementById('modalTitulo').textContent = 'Editar Acomodação';
-            document.getElementById('editIndex').value = i;
-            document.getElementById('fNome').value = a.nome;
-            document.getElementById('fTipo').value = a.tipo;
-            document.getElementById('fResidencia').value = a.residencia;
-            document.getElementById('fCapacidade').value = a.capacidade || '';
-            document.getElementById('fPreco').value = a.preco;
-            document.getElementById('fStatus').value = a.status;
-            document.getElementById('fArea').value = a.area || '';
-            document.getElementById('fDescricao').value = a.descricao || '';
-            document.querySelectorAll('.comodidades-grid input[type=checkbox]').forEach(cb => {
-                cb.checked = (a.comodidades || []).includes(cb.value);
-            });
-            document.getElementById('modalOverlay').classList.add('ativo');
-        }
-
-        function fecharModal() {
-            document.getElementById('modalOverlay').classList.remove('ativo');
-        }
-
-        function fecharModalFora(e) {
-            if (e.target === document.getElementById('modalOverlay')) fecharModal();
-        }
-
-        function limparForm() {
-            ['fNome','fTipo','fResidencia','fCapacidade','fPreco','fArea','fDescricao'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.value = '';
-            });
-            document.getElementById('fStatus').value = 'Disponível';
-            document.querySelectorAll('.comodidades-grid input[type=checkbox]').forEach(cb => cb.checked = false);
-        }
-
-        function salvar() {
-            const nome = document.getElementById('fNome').value.trim();
-            const tipo = document.getElementById('fTipo').value;
-            const residencia = document.getElementById('fResidencia').value.trim();
-            const preco = document.getElementById('fPreco').value;
-
-            if (!nome || !tipo || !residencia || !preco) {
-                mostrarToast('Preencha os campos obrigatórios (*)', 'erro');
-                return;
-            }
-
-            const comodidades = [...document.querySelectorAll('.comodidades-grid input[type=checkbox]:checked')].map(cb => cb.value);
-
-            const obj = {
-                nome,
-                tipo,
-                residencia,
-                capacidade: parseInt(document.getElementById('fCapacidade').value) || 1,
-                preco: parseFloat(preco),
-                status: document.getElementById('fStatus').value,
-                area: parseInt(document.getElementById('fArea').value) || null,
-                descricao: document.getElementById('fDescricao').value.trim(),
-                comodidades,
-            };
-
-            const idx = document.getElementById('editIndex').value;
-            if (idx !== '') {
-                acomodacoes[parseInt(idx)] = obj;
-                mostrarToast('Acomodação atualizada com sucesso!');
-            } else {
-                acomodacoes.push(obj);
-                mostrarToast('Acomodação cadastrada com sucesso!');
-            }
-
-            salvarLocal();
-            fecharModal();
-            renderTabela();
-        }
-
-        let indexExcluir = null;
-
-        function abrirExclusao(i) {
-            indexExcluir = i;
-            document.getElementById('nomeExcluir').textContent = `"${acomodacoes[i].nome}"`;
-            document.getElementById('modalExcluir').classList.add('ativo');
-        }
-
-        function fecharExclusao() {
-            document.getElementById('modalExcluir').classList.remove('ativo');
-            indexExcluir = null;
-        }
-
-        function fecharExclusaoFora(e) {
-            if (e.target === document.getElementById('modalExcluir')) fecharExclusao();
-        }
-
-        function confirmarExclusao() {
-            if (indexExcluir === null) return;
-            acomodacoes.splice(indexExcluir, 1);
-            salvarLocal();
-            fecharExclusao();
-            renderTabela();
-            mostrarToast('Acomodação removida.', 'erro');
-        }
-
-        function salvarLocal() {
-            localStorage.setItem('acomodacoes', JSON.stringify(acomodacoes));
-        }
-
-        function mostrarToast(msg, tipo = 'ok') {
-            const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.className = 'toast-custom ativo ' + (tipo === 'erro' ? 'toast-erro' : 'toast-ok');
-            setTimeout(() => t.className = 'toast-custom', 3000);
-        }
-
-        renderTabela();
-    </script>
+    <script src="../js/proprietario.js"></script>
 </body>
 </html>

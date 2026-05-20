@@ -66,11 +66,9 @@ public class AuthService {
     }
 
     private void criarSessao(Cliente cliente, HttpServletRequest httpRequest) {
-        // Invalida sessao anterior se existir
         HttpSession sessionAntiga = httpRequest.getSession(false);
         if (sessionAntiga != null) sessionAntiga.invalidate();
 
-        // Cria nova sessao e registra autenticacao no SecurityContext
         HttpSession session = httpRequest.getSession(true);
         UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                 cliente.getEmail(), null, Collections.emptyList()
