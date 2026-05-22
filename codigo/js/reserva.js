@@ -6,6 +6,8 @@ const quartoId = urlParams.get('quartoId');
 const precoDiaria = parseFloat(urlParams.get('preco')) || 0;
 const tipoQuarto = urlParams.get('tipo') || 'individual';
 
+let quartoAtual = null;
+
 async function carregarResumo() {
     try {
         const [residenciaRes, quartoRes] = await Promise.all([
@@ -14,11 +16,16 @@ async function carregarResumo() {
         ]);
 
         const residencia = await residenciaRes.json();
-        const quarto = await quartoRes.json();
+        quartoAtual = await quartoRes.json();
 
         document.getElementById('resumoResidencia').innerText = residencia.endereco;
-        document.getElementById('resumoQuarto').innerText = getTipoQuarto(quarto);
+        document.getElementById('resumoQuarto').innerText = getTipoQuarto(quartoAtual);
         document.getElementById('resumoPreco').innerText = `R$ ${precoDiaria.toFixed(2)}`;
+
+        if (tipoQuarto === 'familia') {
+            document.getElementById('campoHospedes').style.display = 'block';
+            document.getElementById('qtdHospedes').addEventListener('input', calcularTotal);
+        }
 
     } catch (error) {
         console.error('Erro ao carregar resumo:', error);
@@ -51,7 +58,14 @@ function calcularTotal() {
         if (hSaida > 12) diarias++;
 
         if (diarias > 0) {
-            const total = diarias * precoDiaria;
+            let valorDiaria = precoDiaria;
+
+            if (tipoQuarto === 'familia') {
+                const qtdHospedes = parseInt(document.getElementById('qtdHospedes').value) || 1;
+                valorDiaria = calcularDiariaFamilia(precoDiaria, qtdHospedes);
+            }
+
+            const total = diarias * valorDiaria;
             document.getElementById('totalExibido').innerText = `R$ ${total.toFixed(2)}`;
             document.getElementById('legendaDias').innerText = `Cálculo para ${diarias} diária(s)`;
         } else {
@@ -60,6 +74,31 @@ function calcularTotal() {
         }
     }
 }
+
+function calcularDiariaFamilia(valorBase, qtdHospedes) {
+    const percentualAdicional = quartoAtual?.percentualAdicional || 15;
+    const valorPorHospede = quartoAtual?.valorPorHospede || 15;
+    
+    const valorComPercentual = valorBase * (1 + (percentualAdicional / 100) * qtdHospedes);
+    const totalHospedes = qtdHospedes * valorPorHospede;
+    let total = valorComPercentual + totalHospedes;
+
+    const capacidadeMaxima = quartoAtual?.capacidadeMaxima || 7;
+    const desconto = calcularDesconto(qtdHospedes, capacidadeMaxima);
+    total = total * (1 - desconto);
+
+    return total;
+}
+
+function calcularDesconto(qtdHospedes, capacidadeMaxima) {
+    const proporcao = qtdHospedes / capacidadeMaxima;
+    if (qtdHospedes < 3) return 0.0;
+    if (proporcao < 0.5) return 0.05;
+    if (proporcao < 0.75) return 0.10;
+    if (proporcao < 1.0) return 0.15;
+    return 0.20;
+}
+
 async function confirmarAluguel() {
     const dataEntrada = document.getElementById('dataEntrada').value;
     const horaEntrada = document.getElementById('horaEntrada').value || '12:00';
@@ -78,11 +117,21 @@ async function confirmarAluguel() {
         return;
     }
 
+    let qtdHospedes = null;
+    if (tipoQuarto === 'familia') {
+        qtdHospedes = parseInt(document.getElementById('qtdHospedes').value);
+        if (!qtdHospedes || qtdHospedes < 1) {
+            alert('Por favor, informe a quantidade de hóspedes!');
+            return;
+        }
+    }
+
     const aluguel = {
         dataEntrada: `${dataEntrada}T${horaEntrada}:00`,
         dataSaida: `${dataSaida}T${horaSaida}:00`,
         cliente: { id: parseInt(clienteId) },
-        quarto: { id: parseInt(quartoId), tipo: tipoQuarto }
+        quarto: { id: parseInt(quartoId), tipo: tipoQuarto },
+        qtdHospedes: qtdHospedes
     };
 
     try {

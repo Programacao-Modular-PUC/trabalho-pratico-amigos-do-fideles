@@ -68,8 +68,5 @@ public class QuartoDuplo extends Quarto {
         return total;
     }
 
-    @Override
-    public Double calcularValorFinal(int qtdDiarias, int qtdHospedes) {
-        return super.calcularValorFinal(qtdDiarias, qtdHospedes);
-    }
+
 }

@@ -56,8 +56,5 @@ public class QuartoIndividual extends Quarto {
         return getValorBase() + adicional;
     }
 
-    @Override
-    public Double calcularValorFinal(int qtdDiarias, int qtdHospedes) {
-        return super.calcularValorFinal(qtdDiarias, qtdHospedes);
-    }
+
 }

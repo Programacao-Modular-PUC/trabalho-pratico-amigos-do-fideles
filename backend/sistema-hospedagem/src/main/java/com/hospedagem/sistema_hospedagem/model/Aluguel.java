@@ -8,6 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import com.hospedagem.sistema_hospedagem.model.QuartoFamilia;
 
 @Entity
 @Table(name = "alugueis")
@@ -19,7 +20,7 @@ public class Aluguel {
     private LocalDateTime dataEntrada;
     private LocalDateTime dataSaida;
     private int qtdDiarias;
-    private int qtdHospedes;
+    private Integer qtdHospedes;
     private Double valorFinal;
 
     @ManyToOne
@@ -33,7 +34,7 @@ public class Aluguel {
     public Aluguel() {
     }
 
-    public Aluguel(LocalDateTime dataEntrada, LocalDateTime dataSaida, int qtdHospedes,
+    public Aluguel(LocalDateTime dataEntrada, LocalDateTime dataSaida, Integer qtdHospedes,
             Cliente cliente, Quarto quarto) {
         this.dataEntrada = dataEntrada;
         this.dataSaida = dataSaida;
@@ -74,11 +75,11 @@ public class Aluguel {
         this.qtdDiarias = qtdDiarias;
     }
 
-    public int getQtdHospedes() {
+    public Integer getQtdHospedes() {
         return qtdHospedes;
     }
 
-    public void setQtdHospedes(int qtdHospedes) {
+    public void setQtdHospedes(Integer qtdHospedes) {
         this.qtdHospedes = qtdHospedes;
     }
 
@@ -107,11 +108,11 @@ public class Aluguel {
     }
 
     public int calcularDiarias() {
-        if (dataEntrada == null || dataSaida == null) return 0;
+        if (dataEntrada == null || dataSaida == null)
+            return 0;
 
         int diarias = 0;
         LocalDateTime entrada = dataEntrada;
-
 
         if (dataEntrada.getHour() > 12) {
             diarias++;
@@ -130,7 +131,14 @@ public class Aluguel {
 
     public Double calcularValorFinal() {
         this.qtdDiarias = calcularDiarias();
-        this.valorFinal = quarto.calcularValorFinal(qtdDiarias, qtdHospedes);
+
+        if (quarto instanceof QuartoFamilia && qtdHospedes != null) {
+            QuartoFamilia qf = (QuartoFamilia) quarto;
+            this.valorFinal = qf.calcularDiariaComHospedes(qtdHospedes.intValue()) * qtdDiarias;
+        } else {
+            this.valorFinal = quarto.calcularValorFinal(qtdDiarias);
+        }
+
         return valorFinal;
     }
 }

@@ -87,10 +87,10 @@ public abstract class Quarto {
 
     public abstract Double calcularDiaria();
 
-    public Double calcularValorFinal(int qtdDiarias, int qtdHospedes) {
-        double adicional = 0;
-        if (possuiAR != null && possuiAR) adicional += 50;
-        if (possuiHidro != null && possuiHidro) adicional += 80;
-        return (calcularDiaria() + adicional) * qtdDiarias;
-    }
+    public Double calcularValorFinal(int qtdDiarias) {
+    double adicional = 0;
+    if (possuiAR != null && possuiAR) adicional += 50;
+    if (possuiHidro != null && possuiHidro) adicional += 80;
+    return (calcularDiaria() + adicional) * qtdDiarias;
+}
 }
