@@ -41,9 +41,9 @@
       <div class="code-strip">
         <div>
           <div class="code-label">Código da Reserva</div>
-          <div class="code-value">#FID-2026-0419</div>
+          <div class="code-value" id="codigoReserva">#FID-2026-0000</div>
         </div>
-        <div class="code-date">Emitido em: 19/04/2026 às 14h32</div>
+        <div class="code-date" id="dataEmissao">Emitido em: ---</div>
       </div>
 
       <div class="body-grid">
@@ -51,16 +51,16 @@
         <div class="section">
           <div class="section-title">Residência</div>
           <div class="info-row">
-            <label>Pousada</label>
-            <strong>Pousada Recanto do Sol</strong>
+            <label>Endereço</label>
+            <strong id="enderecoResidencia">---</strong>
           </div>
           <div class="info-row">
             <label>Quarto</label>
-            <strong>Quarto de Casal (Hidro Ar)</strong>
+            <strong id="tipoQuarto">---</strong>
           </div>
           <div class="info-row">
             <label>Valor da Diária</label>
-            <strong>R$ 450,00</strong>
+            <strong id="valorDiaria">---</strong>
           </div>
         </div>
 
@@ -68,15 +68,15 @@
           <div class="section-title">Hóspede</div>
           <div class="info-row">
             <label>Nome</label>
-            <strong>João da Silva</strong>
+            <strong id="nomeCliente">---</strong>
           </div>
           <div class="info-row">
             <label>Telefone</label>
-            <span>(31) 99999-0000</span>
+            <span id="telefoneCliente">---</span>
           </div>
           <div class="info-row">
             <label>E-mail</label>
-            <span>joao@email.com</span>
+            <span id="emailCliente">---</span>
           </div>
         </div>
 
@@ -86,71 +86,55 @@
             <div class="date-block">
               <div class="info-row">
                 <label>Check-in</label>
-                <strong>22/04/2026</strong>
-                <span>A partir das 14:00</span>
+                <strong id="dataEntrada">---</strong>
               </div>
             </div>
             <div class="arrow-block">→</div>
             <div class="date-block">
               <div class="info-row">
                 <label>Check-out</label>
-                <strong>25/04/2026</strong>
-                <span>Até as 12:00</span>
+                <strong id="dataSaida">---</strong>
               </div>
             </div>
-            <div class="arrow-block" style="padding-right:0;"></div>
+            <div class="arrow-block"></div>
             <div class="date-block" style="text-align:right;">
               <div class="info-row" style="align-items:flex-end;">
-                <label>Total de Noites</label>
-                <strong style="font-size:1.8rem; color:var(--gold);">3</strong>
+                <label>Total de Diárias</label>
+                <strong id="qtdDiarias" style="font-size:1.8rem; color:var(--gold);">0</strong>
               </div>
             </div>
           </div>
         </div>
-
 
         <div class="total-section">
           <div class="price-breakdown">
             <div class="section-title" style="margin-bottom:12px;">Resumo Financeiro</div>
             <div class="price-line">
-              <span>Diária (R$ 450,00 × 3 noites)</span>
-              <span>R$ 1.350,00</span>
-            </div>
-            <div class="price-line">
-              <span>Taxa de serviço</span>
-              <span>R$ 0,00</span>
-            </div>
-            <div class="price-line">
-              <span>Descontos</span>
-              <span>— R$ 0,00</span>
+              <span id="descricaoDiaria">Diária × --- noites</span>
+              <span id="subtotal">R$ 0,00</span>
             </div>
             <div class="price-line total">
               <span>Total a pagar</span>
-              <span>R$ 1.350,00</span>
+              <span id="totalPagar">R$ 0,00</span>
             </div>
           </div>
           <div class="total-highlight">
             <div class="tl">Total Estimado</div>
-            <div class="tv">R$ 1.350,00</div>
+            <div class="tv" id="totalDestaque">R$ 0,00</div>
           </div>
-        </div>
-
-       
-        <div class="obs-section">
-          <div class="section-title" style="margin-bottom:12px;">Observações Especiais</div>
-          <div class="obs-box">Preciso de berço para bebê de 8 meses.</div>
         </div>
 
       </div>
 
       <div class="actions">
-        <button class="btn-confirmar" >&nbsp;Imprimir / Salvar PDF</button>
-         <p class="text-center mt-3 small"><a href="index.html" class="text-muted">Cancelar e voltar</a></p>
+        <button class="btn-confirmar" onclick="window.print()">Imprimir / Salvar PDF</button>
+        <p class="text-center mt-3 small"><a href="index.html" class="text-muted">Voltar ao início</a></p>
       </div>
 
     </div>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/recibo.js"></script>
 </body>
 </html>

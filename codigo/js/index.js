@@ -33,6 +33,10 @@ async function carregarResidencias() {
     } catch (error) {
         console.error('Erro ao carregar residências:', error);
     }
+    const nome = sessionStorage.getItem('clienteNome');
+    if (nome) {
+        document.getElementById('nomeUsuario').innerText = `Olá, ${nome}!`;
+    }
 }
 
 function filtrarResidencias() {

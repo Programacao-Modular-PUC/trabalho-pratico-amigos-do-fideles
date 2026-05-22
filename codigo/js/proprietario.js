@@ -2,6 +2,7 @@ const API_URL = 'http://localhost:8080';
 
 let residencias = [];
 let quartos = [];
+let residenciaEditandoId = null;
 
 async function carregarResidencias() {
     try {
@@ -50,12 +51,31 @@ function renderTabelaResidencias() {
                 <td>${r.bairro || '---'}</td>
                 <td>${r.telefone || '---'}</td>
                 <td>
+                    <button class="btn-acao btn-editar" onclick="abrirEdicaoResidencia(${r.id})">
+                        <i class="bi bi-pencil"></i>
+                    </button>
                     <button class="btn-acao btn-del" onclick="deletarResidencia(${r.id})">
                         <i class="bi bi-trash3"></i>
                     </button>
                 </td>
             </tr>`;
     });
+}
+
+function abrirEdicaoResidencia(id) {
+    const r = residencias.find(r => r.id === id);
+    if (!r) return;
+
+    residenciaEditandoId = id;
+    document.getElementById('modalResidenciaTitulo').innerText = 'Editar Residência';
+    document.getElementById('rEndereco').value = r.endereco || '';
+    document.getElementById('rNumero').value = r.numero || '';
+    document.getElementById('rBairro').value = r.bairro || '';
+    document.getElementById('rCep').value = r.cep || '';
+    document.getElementById('rTelefone').value = r.telefone || '';
+    document.getElementById('rEmail').value = r.email || '';
+    document.getElementById('rFotoUrl').value = r.fotoUrl || '';
+    document.getElementById('modalResidencia').classList.add('ativo');
 }
 
 async function salvarResidencia() {
@@ -75,18 +95,27 @@ async function salvarResidencia() {
     }
 
     try {
-        const res = await fetch(`${API_URL}/residencias`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body)
-        });
+        let res;
+        if (residenciaEditandoId) {
+            res = await fetch(`${API_URL}/residencias/${residenciaEditandoId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+        } else {
+            res = await fetch(`${API_URL}/residencias`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+        }
 
         if (res.ok) {
-            mostrarToast('Residência cadastrada com sucesso!');
+            mostrarToast(residenciaEditandoId ? 'Residência atualizada!' : 'Residência cadastrada!');
             fecharModalResidencia();
             await carregarResidencias();
         } else {
-            alert('Erro ao cadastrar residência!');
+            alert('Erro ao salvar residência!');
         }
     } catch (error) {
         console.error('Erro:', error);
@@ -206,13 +235,24 @@ async function deletarQuarto(id) {
     await carregarQuartos();
 }
 
+// ========== MODAIS ==========
 
 function abrirModalResidencia() {
+    residenciaEditandoId = null;
+    document.getElementById('modalResidenciaTitulo').innerText = 'Nova Residência';
+    document.getElementById('rEndereco').value = '';
+    document.getElementById('rNumero').value = '';
+    document.getElementById('rBairro').value = '';
+    document.getElementById('rCep').value = '';
+    document.getElementById('rTelefone').value = '';
+    document.getElementById('rEmail').value = '';
+    document.getElementById('rFotoUrl').value = '';
     document.getElementById('modalResidencia').classList.add('ativo');
 }
 
 function fecharModalResidencia() {
     document.getElementById('modalResidencia').classList.remove('ativo');
+    residenciaEditandoId = null;
 }
 
 function abrirModalQuarto() {

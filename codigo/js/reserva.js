@@ -34,26 +34,32 @@ function getTipoQuarto(quarto) {
 
 function calcularTotal() {
     const dataEntrada = document.getElementById('dataEntrada').value;
-    const horaEntrada = document.getElementById('horaEntrada').value;
+    const horaEntrada = document.getElementById('horaEntrada').value || '12:00';
     const dataSaida = document.getElementById('dataSaida').value;
-    const horaSaida = document.getElementById('horaSaida').value;
+    const horaSaida = document.getElementById('horaSaida').value || '12:00';
 
     if (dataEntrada && dataSaida) {
-        const entrada = new Date(`${dataEntrada}T${horaEntrada || '12:00'}`);
-        const saida = new Date(`${dataSaida}T${horaSaida || '12:00'}`);
-        const diferencaDias = (saida - entrada) / (1000 * 3600 * 24);
+        const entrada = new Date(`${dataEntrada}T${horaEntrada}:00`);
+        const saida = new Date(`${dataSaida}T${horaSaida}:00`);
 
-        if (diferencaDias > 0) {
-            const total = diferencaDias * precoDiaria;
+        let diarias = Math.floor((saida - entrada) / (1000 * 3600 * 24));
+
+        const [hEntrada] = horaEntrada.split(':').map(Number);
+        if (hEntrada > 12) diarias++;
+
+        const [hSaida] = horaSaida.split(':').map(Number);
+        if (hSaida > 12) diarias++;
+
+        if (diarias > 0) {
+            const total = diarias * precoDiaria;
             document.getElementById('totalExibido').innerText = `R$ ${total.toFixed(2)}`;
-            document.getElementById('legendaDias').innerText = `Cálculo para ${Math.ceil(diferencaDias)} diária(s)`;
+            document.getElementById('legendaDias').innerText = `Cálculo para ${diarias} diária(s)`;
         } else {
             document.getElementById('totalExibido').innerText = 'R$ 0,00';
             document.getElementById('legendaDias').innerText = 'A data de saída deve ser maior que a de entrada';
         }
     }
 }
-
 async function confirmarAluguel() {
     const dataEntrada = document.getElementById('dataEntrada').value;
     const horaEntrada = document.getElementById('horaEntrada').value || '12:00';
@@ -88,8 +94,8 @@ async function confirmarAluguel() {
         });
 
         if (response.ok) {
-            alert('Reserva confirmada com sucesso!');
-            window.location.href = 'index.html';
+            const aluguelCriado = await response.json();
+            window.location.href = `recibo.html?aluguelId=${aluguelCriado.id}`;
         } else {
             const erro = await response.json();
             alert(`Erro: ${erro.message || 'Não foi possível confirmar a reserva'}`);
