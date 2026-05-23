@@ -78,15 +78,24 @@ function calcularTotal() {
 function calcularDiariaFamilia(valorBase, qtdHospedes) {
     const percentualAdicional = quartoAtual?.percentualAdicional || 15;
     const valorPorHospede = quartoAtual?.valorPorHospede || 15;
-    
+    const capacidadeMaxima = quartoAtual?.capacidadeMaxima || 7;
+
     const valorComPercentual = valorBase * (1 + (percentualAdicional / 100) * qtdHospedes);
     const totalHospedes = qtdHospedes * valorPorHospede;
     let total = valorComPercentual + totalHospedes;
 
-    const capacidadeMaxima = quartoAtual?.capacidadeMaxima || 7;
     const desconto = calcularDesconto(qtdHospedes, capacidadeMaxima);
-    total = total * (1 - desconto);
+    
+    const infoDesconto = document.getElementById('infoDesconto');
+    const textoDesconto = document.getElementById('textoDesconto');
+    if (desconto > 0) {
+        infoDesconto.style.display = 'block';
+        textoDesconto.innerText = `Desconto de grupo aplicado: ${desconto * 100}%`;
+    } else {
+        infoDesconto.style.display = 'none';
+    }
 
+    total = total * (1 - desconto);
     return total;
 }
 
@@ -120,8 +129,14 @@ async function confirmarAluguel() {
     let qtdHospedes = null;
     if (tipoQuarto === 'familia') {
         qtdHospedes = parseInt(document.getElementById('qtdHospedes').value);
+        const capacidadeMaxima = quartoAtual?.capacidadeMaxima || 0;
+
         if (!qtdHospedes || qtdHospedes < 1) {
             alert('Por favor, informe a quantidade de hóspedes!');
+            return;
+        }
+        if (qtdHospedes > capacidadeMaxima) {
+            alert(`Este quarto comporta no máximo ${capacidadeMaxima} hóspedes!`);
             return;
         }
     }

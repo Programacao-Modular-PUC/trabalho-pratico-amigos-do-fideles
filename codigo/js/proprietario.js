@@ -4,6 +4,14 @@ let residencias = [];
 let quartos = [];
 let residenciaEditandoId = null;
 
+const tipo = sessionStorage.getItem('tipo');
+const proprietarioId = sessionStorage.getItem('proprietarioId');
+
+if (tipo !== 'proprietario' || !proprietarioId) {
+    alert('Acesso restrito a proprietários!');
+    window.location.href = 'login.html';
+}
+
 async function carregarResidencias() {
     try {
         const res = await fetch(`${API_URL}/residencias`);
@@ -103,7 +111,8 @@ async function salvarResidencia() {
                 body: JSON.stringify(body)
             });
         } else {
-            res = await fetch(`${API_URL}/residencias`, {
+            const url = `${API_URL}/residencias?proprietarioId=${proprietarioId}`;
+            res = await fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body)
@@ -235,7 +244,6 @@ async function deletarQuarto(id) {
     await carregarQuartos();
 }
 
-// ========== MODAIS ==========
 
 function abrirModalResidencia() {
     residenciaEditandoId = null;

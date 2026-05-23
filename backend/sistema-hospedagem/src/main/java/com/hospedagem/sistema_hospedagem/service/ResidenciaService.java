@@ -1,10 +1,11 @@
 package com.hospedagem.sistema_hospedagem.service;
 
+import com.hospedagem.sistema_hospedagem.model.Proprietario;
 import com.hospedagem.sistema_hospedagem.model.Residencia;
+import com.hospedagem.sistema_hospedagem.repository.ProprietarioRepository;
 import com.hospedagem.sistema_hospedagem.repository.ResidenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,9 @@ public class ResidenciaService {
 
     @Autowired
     private ResidenciaRepository residenciaRepository;
+
+    @Autowired
+    private ProprietarioRepository proprietarioRepository;
 
     public List<Residencia> listarTodas() {
         return residenciaRepository.findAll();
@@ -26,18 +30,24 @@ public class ResidenciaService {
         return residenciaRepository.save(residencia);
     }
 
+    public Residencia salvarComProprietario(Residencia residencia, Long proprietarioId) {
+        Proprietario proprietario = proprietarioRepository.findById(proprietarioId)
+                .orElseThrow(() -> new RuntimeException("Proprietário não encontrado"));
+        proprietario.cadastrarResidencia(residencia);
+        return residenciaRepository.save(residencia);
+    }
+
     public Residencia atualizar(Long id, Residencia residenciaAtualizada) {
-        Residencia existente = residenciaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Residência não encontrada com id: " + id));
-
-        existente.setEndereco(residenciaAtualizada.getEndereco());
-        existente.setNumero(residenciaAtualizada.getNumero());
-        existente.setBairro(residenciaAtualizada.getBairro());
-        existente.setCep(residenciaAtualizada.getCep());
-        existente.setTelefone(residenciaAtualizada.getTelefone());
-        existente.setEmail(residenciaAtualizada.getEmail());
-
-        return residenciaRepository.save(existente);
+        Residencia residencia = residenciaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Residencia não encontrada"));
+        residencia.setEndereco(residenciaAtualizada.getEndereco());
+        residencia.setNumero(residenciaAtualizada.getNumero());
+        residencia.setBairro(residenciaAtualizada.getBairro());
+        residencia.setCep(residenciaAtualizada.getCep());
+        residencia.setTelefone(residenciaAtualizada.getTelefone());
+        residencia.setEmail(residenciaAtualizada.getEmail());
+        residencia.setFotoUrl(residenciaAtualizada.getFotoUrl());
+        return residenciaRepository.save(residencia);
     }
 
     public void deletar(Long id) {

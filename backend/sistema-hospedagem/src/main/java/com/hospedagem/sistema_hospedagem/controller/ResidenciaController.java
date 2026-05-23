@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -30,13 +29,24 @@ public class ResidenciaController {
     }
 
     @PostMapping
-    public ResponseEntity<Residencia> criar(@RequestBody Residencia residencia) {
-        Residencia salva = residenciaService.salvar(residencia);
-        return ResponseEntity.status(HttpStatus.CREATED).body(salva);
+    public ResponseEntity<Residencia> criar(@RequestBody Residencia residencia,
+            @RequestParam(required = false) Long proprietarioId) {
+        try {
+            Residencia salva;
+            if (proprietarioId != null) {
+                salva = residenciaService.salvarComProprietario(residencia, proprietarioId);
+            } else {
+                salva = residenciaService.salvar(residencia);
+            }
+            return ResponseEntity.status(HttpStatus.CREATED).body(salva);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Residencia> atualizar(@PathVariable Long id, @RequestBody Residencia residencia) {
+    public ResponseEntity<Residencia> atualizar(@PathVariable Long id,
+            @RequestBody Residencia residencia) {
         try {
             Residencia atualizada = residenciaService.atualizar(id, residencia);
             return ResponseEntity.ok(atualizada);

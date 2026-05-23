@@ -18,8 +18,10 @@ document.getElementById('telefone').addEventListener('input', function (e) {
     e.target.value = v;
 });
 
+
 document.getElementById('form-cadastro').addEventListener('submit', async function (e) {
     e.preventDefault();
+    const tipo = document.querySelector('input[name="tipoCadastro"]:checked').value;
     const btn = document.getElementById('btn-cadastro');
     const erro = document.getElementById('msg-erro');
     const sucesso = document.getElementById('msg-sucesso');
@@ -52,8 +54,10 @@ document.getElementById('form-cadastro').addEventListener('submit', async functi
         senha: senha
     };
 
+    const endpoint = tipo === 'proprietario' ? '/proprietarios/cadastro' : '/auth/cadastro';
+
     try {
-        const res = await fetch(`${API_URL}/auth/cadastro`, {
+        const res = await fetch(`${API_URL}${endpoint}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -66,19 +70,31 @@ document.getElementById('form-cadastro').addEventListener('submit', async functi
             throw new Error(data.erro || 'Erro ao realizar cadastro.');
         }
 
-        sessionStorage.setItem('clienteNome', data.nome);
-        sessionStorage.setItem('clienteId', data.clienteId);
+        if (tipo === 'proprietario') {
+            sessionStorage.setItem('proprietarioNome', data.nome);
+            sessionStorage.setItem('proprietarioId', data.id);
+            sessionStorage.setItem('tipo', 'proprietario');
+        } else {
+            sessionStorage.setItem('clienteNome', data.nome);
+            sessionStorage.setItem('clienteId', data.clienteId);
+            sessionStorage.setItem('tipo', 'cliente');
+        }
 
         sucesso.textContent = `Bem-vindo, ${data.nome}! Redirecionando...`;
         sucesso.classList.remove('d-none');
-        setTimeout(() => window.location.href = 'index.html', 1500);
+
+        setTimeout(() => {
+            if (tipo === 'proprietario') {
+                window.location.href = 'proprietario.html';
+            } else {
+                window.location.href = 'index.html';
+            }
+        }, 1500);
 
     } catch (err) {
-        if (err.message === 'Failed to fetch') {
-            erro.textContent = 'Não foi possível conectar ao servidor.';
-        } else {
-            erro.textContent = err.message;
-        }
+        erro.textContent = err.message === 'Failed to fetch'
+            ? 'Não foi possível conectar ao servidor.'
+            : err.message;
         erro.classList.remove('d-none');
         btn.disabled = false;
         btn.textContent = 'Finalizar Cadastro';

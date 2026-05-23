@@ -42,7 +42,6 @@ public class QuartoIndividual extends Quarto {
         this.valorAdicionalPorCama = valorAdicionalPorCama;
     }
 
-    // Quarto Individual nao possui berco — limite de hospedes proporcional as camas
     public int getLimiteHospedes() {
         return quantidadeCamas;
     }

@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
@@ -24,10 +26,12 @@ public class Residencia {
     private String telefone;
     private String email;
     private String fotoUrl;
-
     @JsonIgnore
     @OneToMany(mappedBy = "residencia", cascade = CascadeType.ALL)
     private List<Quarto> quartos;
+    @ManyToOne
+    @JoinColumn(name = "proprietario_id")
+    private Proprietario proprietario;
 
     public Residencia() {
     }
@@ -111,5 +115,13 @@ public class Residencia {
 
     public void setFotoUrl(String fotoUrl) {
         this.fotoUrl = fotoUrl;
+    }
+
+    public Proprietario getProprietario() {
+        return proprietario;
+    }
+
+    public void setProprietario(Proprietario proprietario) {
+        this.proprietario = proprietario;
     }
 }
