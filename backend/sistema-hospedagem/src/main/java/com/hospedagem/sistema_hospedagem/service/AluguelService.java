@@ -9,8 +9,7 @@ import com.hospedagem.sistema_hospedagem.repository.ClienteRepository;
 import com.hospedagem.sistema_hospedagem.repository.QuartoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.hospedagem.sistema_hospedagem.model.QuartoFamilia;
-
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +41,15 @@ public class AluguelService {
         return aluguelRepository.findByQuartoId(quartoId);
     }
 
+    public void verificarDisponibilidade(Long quartoId, LocalDateTime dataEntrada, LocalDateTime dataSaida) {
+        Quarto quarto = quartoRepository.findById(quartoId)
+                .orElseThrow(() -> new RuntimeException("Quarto não encontrado"));
+        List<Aluguel> alugueis = aluguelRepository.findByQuartoId(quartoId);
+        if (!quarto.confirmarAluguel(dataEntrada, dataSaida, alugueis)) {
+            throw new RuntimeException("Quarto já ocupado neste período!");
+        }
+    }
+
     public Aluguel criar(Aluguel aluguel) {
         Cliente cliente = clienteRepository.findById(aluguel.getCliente().getId())
                 .orElseThrow(
@@ -53,6 +61,8 @@ public class AluguelService {
 
         aluguel.setCliente(cliente);
         aluguel.setQuarto(quarto);
+
+        verificarDisponibilidade(quarto.getId(), aluguel.getDataEntrada(), aluguel.getDataSaida());
 
         if (quarto instanceof QuartoFamilia) {
             QuartoFamilia qf = (QuartoFamilia) quarto;

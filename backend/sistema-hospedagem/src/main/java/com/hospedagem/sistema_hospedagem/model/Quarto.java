@@ -11,6 +11,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -93,4 +95,18 @@ public abstract class Quarto {
     if (possuiHidro != null && possuiHidro) adicional += 80;
     return (calcularDiaria() + adicional) * qtdDiarias;
 }
+
+public boolean verificarDisponibilidade(LocalDateTime dataEntrada, LocalDateTime dataSaida, List<Aluguel> alugueis) {
+    for (Aluguel a : alugueis) {
+        boolean conflito = dataEntrada.isBefore(a.getDataSaida())
+                        && dataSaida.isAfter(a.getDataEntrada());
+        if (conflito) return false;
+    }
+    return true;
+}
+
+public boolean confirmarAluguel(LocalDateTime dataEntrada, LocalDateTime dataSaida, List<Aluguel> alugueis) {
+    return verificarDisponibilidade(dataEntrada, dataSaida, alugueis);
+}
+
 }

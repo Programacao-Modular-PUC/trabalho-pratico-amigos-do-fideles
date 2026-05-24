@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "residencias")
@@ -124,4 +125,12 @@ public class Residencia {
     public void setProprietario(Proprietario proprietario) {
         this.proprietario = proprietario;
     }
+
+    public void adicionarQuarto(Quarto quarto) {
+        quarto.setResidencia(this);
+        if (this.quartos == null) {
+           this.quartos = new ArrayList<>();
+        }
+    this.quartos.add(quarto);
+   }
 }
