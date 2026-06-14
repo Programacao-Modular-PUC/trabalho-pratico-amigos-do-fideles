@@ -31,9 +31,10 @@ async function carregarReservas() {
 
             const tipoQuarto = getTipoQuarto(aluguel.quarto);
             const residencia = aluguel.quarto?.residencia?.endereco || '---';
+            const ativo = aluguel.status === 'ATIVO';
 
             tbody.innerHTML += `
-                <tr>
+                <tr id="linha-${aluguel.id}">
                     <td>${aluguel.id}</td>
                     <td>${residencia}</td>
                     <td>${tipoQuarto}</td>
@@ -41,12 +42,43 @@ async function carregarReservas() {
                     <td>${formatarData(saida)}</td>
                     <td>${aluguel.qtdDiarias}</td>
                     <td>R$ ${aluguel.valorFinal?.toFixed(2) || '---'}</td>
+                    <td>
+                        <span class="badge ${ativo ? 'bg-success' : 'bg-secondary'}">
+                            ${ativo ? 'Ativo' : 'Cancelado'}
+                        </span>
+                    </td>
+                    <td>
+                        ${ativo ? `<button class="btn-cancelar" onclick="cancelarReserva(${aluguel.id})">
+                            <i class="bi bi-x-circle"></i> Cancelar
+                        </button>` : '---'}
+                    </td>
                 </tr>
             `;
         });
 
     } catch (error) {
         console.error('Erro ao carregar reservas:', error);
+    }
+}
+
+async function cancelarReserva(id) {
+    if (!confirm('Tem certeza que deseja cancelar esta reserva?')) return;
+
+    try {
+        const response = await fetch(`${API_URL}/alugueis/${id}/cancelar`, {
+            method: 'PATCH'  
+        });
+
+        if (response.ok) {
+            alert('Reserva cancelada com sucesso!');
+            carregarReservas();
+        } else {
+            const erro = await response.text();
+            alert('Erro ao cancelar: ' + erro);
+        }
+    } catch (error) {
+        console.error('Erro ao cancelar reserva:', error);
+        alert('Erro ao cancelar reserva.');
     }
 }
 

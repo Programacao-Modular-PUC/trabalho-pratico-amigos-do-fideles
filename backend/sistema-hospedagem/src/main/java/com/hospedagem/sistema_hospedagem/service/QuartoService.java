@@ -19,8 +19,6 @@ public class QuartoService {
     @Autowired
     private QuartoRepository quartoRepository;
 
-    // ─── Listagem ────────────────────────────────────────────────────────────
-
     public List<Quarto> listarTodos() {
         return quartoRepository.findAll();
     }
@@ -29,10 +27,6 @@ public class QuartoService {
         return quartoRepository.findByResidenciaId(residenciaId);
     }
 
-    /**
-     * Filtro por tipo de quarto (Sprint 3).
-     * Valores aceitos: "individual", "duplo", "familia".
-     */
     public List<Quarto> listarPorTipo(String tipo) {
         return quartoRepository.findAll().stream()
                 .filter(q -> switch (tipo.toLowerCase()) {
@@ -48,8 +42,6 @@ public class QuartoService {
     public Optional<Quarto> buscarPorId(Long id) {
         return quartoRepository.findById(id);
     }
-
-    // ─── Persistência ────────────────────────────────────────────────────────
 
     public Quarto salvar(Quarto quarto) {
         validarQuarto(quarto);
@@ -71,27 +63,14 @@ public class QuartoService {
         quartoRepository.deleteById(id);
     }
 
-    // ─── Validações ──────────────────────────────────────────────────────────
-
-    /**
-     * Valida regras de negócio ao salvar um quarto.
-     * Ex: berço não é permitido em quarto individual.
-     */
     private void validarQuarto(Quarto quarto) {
         if (quarto.getValorBase() == null || quarto.getValorBase() <= 0) {
             throw new IllegalArgumentException("O valor base do quarto deve ser maior que zero.");
         }
-        // Regra de berço: QuartoIndividual não pode ter berço
         if (quarto instanceof QuartoIndividual) {
-            // QuartoIndividual não possui o atributo berço — nenhuma validação extra necessária.
-            // A exceção RecursoNaoPermitidoException é lançada no controller se o campo for enviado.
         }
     }
 
-    /**
-     * Lança RecursoNaoPermitidoException se tentar atribuir berço a um quarto individual.
-     * Deve ser chamado no controller ao criar um QuartoIndividual.
-     */
     public void validarBercoEmIndividual(boolean solicitouBerco) {
         if (solicitouBerco) {
             throw new RecursoNaoPermitidoException("Berço não é permitido em quarto individual.");

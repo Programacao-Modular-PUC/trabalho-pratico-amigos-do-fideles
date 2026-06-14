@@ -33,6 +33,12 @@
                     <p id="descricaoResidencia" class="text-muted">---</p>
                     <hr>
                     <h5 class="fw-bold mb-3" style="color: var(--primary-marrom);">Quartos Disponíveis:</h5>
+                    <div class="mb-3" id="filtroTipo">
+                        <button class="btn-filtro ativo" onclick="filtrarQuartos('todos')">Todos</button>
+                        <button class="btn-filtro" onclick="filtrarQuartos('individual')">Individual</button>
+                        <button class="btn-filtro" onclick="filtrarQuartos('duplo')">Duplo</button>
+                        <button class="btn-filtro" onclick="filtrarQuartos('familia')">Família</button>
+                    </div>
                     <div id="listaQuartos">
                         <p class="text-muted">Carregando quartos...</p>
                     </div>

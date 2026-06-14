@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/alugueis")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH, RequestMethod.DELETE})
 public class AluguelController {
 
     @Autowired
@@ -34,7 +34,6 @@ public class AluguelController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    /** Histórico completo (ativo + cancelado) de um cliente. Sprint 3. */
     @GetMapping("/historico/{clienteId}")
     public ResponseEntity<List<Aluguel>> historico(@PathVariable Long clienteId) {
         return ResponseEntity.ok(aluguelService.listarHistoricoCliente(clienteId));
@@ -42,12 +41,10 @@ public class AluguelController {
 
     @PostMapping
     public ResponseEntity<Aluguel> criar(@RequestBody Aluguel aluguel) {
-        // Exceções tratadas pelo GlobalExceptionHandler
         Aluguel criado = aluguelService.criar(aluguel);
         return ResponseEntity.status(HttpStatus.CREATED).body(criado);
     }
 
-    /** Cancelamento de aluguel. Sprint 3. */
     @PatchMapping("/{id}/cancelar")
     public ResponseEntity<Aluguel> cancelar(@PathVariable Long id) {
         return ResponseEntity.ok(aluguelService.cancelar(id));

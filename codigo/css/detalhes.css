@@ -101,3 +101,28 @@ body {
     border-radius: 4px;
     margin-right: 5px;
 }
+#filtroTipo {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.btn-filtro {
+    background: none;
+    border: 2px solid var(--primary-marrom);
+    color: var(--primary-marrom);
+    border-radius: 20px;
+    padding: 5px 16px;
+    cursor: pointer;
+    font-family: 'Georgia', serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-filtro:hover,
+.btn-filtro.ativo {
+    background-color: var(--primary-marrom);
+    color: white;
+}

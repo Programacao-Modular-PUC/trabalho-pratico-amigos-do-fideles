@@ -3,6 +3,8 @@ const API_URL = 'http://localhost:8080';
 const urlParams = new URLSearchParams(window.location.search);
 const idResidencia = urlParams.get('id');
 
+let quartosCarregados = [];
+
 async function carregarResidencia() {
     try {
         const response = await fetch(`${API_URL}/residencias/${idResidencia}`);
@@ -26,42 +28,55 @@ async function carregarResidencia() {
 async function carregarQuartos() {
     try {
         const response = await fetch(`${API_URL}/quartos?residenciaId=${idResidencia}`);
-        const quartos = await response.json();
-
-        const listaQuartos = document.getElementById('listaQuartos');
-        listaQuartos.innerHTML = '';
-
-        if (quartos.length === 0) {
-            listaQuartos.innerHTML = '<p class="text-muted">Nenhum quarto disponível.</p>';
-            return;
-        }
-
-        quartos.forEach(quarto => {
-            const tipo = getTipoQuarto(quarto);
-            const tipoParam = getTipoParam(quarto);
-            const tags = getTags(quarto);
-
-            const card = document.createElement('div');
-            card.className = 'quarto-card shadow-sm';
-            card.innerHTML = `
-                <div class="row align-items-center">
-                    <div class="col-8">
-                        <span class="tipo-quarto">${tipo}</span><br>
-                        ${tags}
-                    </div>
-                    <div class="col-4 text-end">
-                        <span class="valor-base">R$ ${quarto.valorBase?.toFixed(2)}</span><br>
-                        <a href="reserva.html?residenciaId=${idResidencia}&quartoId=${quarto.id}&preco=${quarto.valorBase}&tipo=${tipoParam}" 
-                           class="btn-reservar-quarto btn-reserva">Escolher</a>
-                    </div>
-                </div>
-            `;
-            listaQuartos.appendChild(card);
-        });
-
+        quartosCarregados = await response.json();
+        renderizarQuartos(quartosCarregados);
     } catch (error) {
         console.error('Erro ao carregar quartos:', error);
     }
+}
+
+function filtrarQuartos(tipo) {
+    document.querySelectorAll('.btn-filtro').forEach(btn => btn.classList.remove('ativo'));
+    event.target.classList.add('ativo');
+
+    const filtrados = tipo === 'todos'
+        ? quartosCarregados
+        : quartosCarregados.filter(q => getTipoParam(q) === tipo);
+
+    renderizarQuartos(filtrados);
+}
+
+function renderizarQuartos(quartos) {
+    const listaQuartos = document.getElementById('listaQuartos');
+    listaQuartos.innerHTML = '';
+
+    if (quartos.length === 0) {
+        listaQuartos.innerHTML = '<p class="text-muted">Nenhum quarto disponível para este filtro.</p>';
+        return;
+    }
+
+    quartos.forEach(quarto => {
+        const tipo = getTipoQuarto(quarto);
+        const tipoParam = getTipoParam(quarto);
+        const tags = getTags(quarto);
+
+        const card = document.createElement('div');
+        card.className = 'quarto-card shadow-sm';
+        card.innerHTML = `
+            <div class="row align-items-center">
+                <div class="col-8">
+                    <span class="tipo-quarto">${tipo}</span><br>
+                    ${tags}
+                </div>
+                <div class="col-4 text-end">
+                    <span class="valor-base">R$ ${quarto.valorBase?.toFixed(2)}</span><br>
+                    <a href="reserva.html?residenciaId=${idResidencia}&quartoId=${quarto.id}&preco=${quarto.valorBase}&tipo=${tipoParam}" 
+                       class="btn-reservar-quarto btn-reserva">Escolher</a>
+                </div>
+            </div>
+        `;
+        listaQuartos.appendChild(card);
+    });
 }
 
 function getTipoQuarto(quarto) {

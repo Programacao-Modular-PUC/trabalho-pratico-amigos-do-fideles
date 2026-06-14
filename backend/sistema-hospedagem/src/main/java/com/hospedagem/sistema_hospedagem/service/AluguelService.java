@@ -30,7 +30,6 @@ public class AluguelService {
     @Autowired
     private QuartoRepository quartoRepository;
 
-    // ─── Listagem ─────────────────────────────────────────────────────────────
 
     public List<Aluguel> listarTodos() {
         return aluguelRepository.findAll();
@@ -48,14 +47,12 @@ public class AluguelService {
         return aluguelRepository.findByQuartoId(quartoId);
     }
 
-    /** Histórico de aluguéis ativos e cancelados de um cliente (Sprint 3). */
+
     public List<Aluguel> listarHistoricoCliente(Long clienteId) {
         clienteRepository.findById(clienteId)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado com id: " + clienteId));
         return aluguelRepository.findByClienteId(clienteId);
     }
-
-    // ─── Validações ───────────────────────────────────────────────────────────
 
     private void validarDatas(LocalDateTime dataEntrada, LocalDateTime dataSaida) {
         if (dataEntrada == null || dataSaida == null) {
@@ -75,7 +72,7 @@ public class AluguelService {
 
         List<Aluguel> alugueis = aluguelRepository.findByQuartoId(quartoId)
                 .stream()
-                .filter(Aluguel::isAtivo) // ignora aluguéis cancelados
+                .filter(Aluguel::isAtivo) 
                 .toList();
 
         if (!quarto.confirmarAluguel(dataEntrada, dataSaida, alugueis)) {
@@ -83,13 +80,10 @@ public class AluguelService {
         }
     }
 
-    // ─── CRUD ────────────────────────────────────────────────────────────────
 
     public Aluguel criar(Aluguel aluguel) {
-        // 1. Validar datas
         validarDatas(aluguel.getDataEntrada(), aluguel.getDataSaida());
 
-        // 2. Buscar cliente e quarto
         Cliente cliente = clienteRepository.findById(aluguel.getCliente().getId())
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado com id: " + aluguel.getCliente().getId()));
 
@@ -99,10 +93,8 @@ public class AluguelService {
         aluguel.setCliente(cliente);
         aluguel.setQuarto(quarto);
 
-        // 3. Verificar disponibilidade
         verificarDisponibilidade(quarto.getId(), aluguel.getDataEntrada(), aluguel.getDataSaida());
 
-        // 4. Verificar capacidade de hóspedes
         if (quarto instanceof QuartoFamilia qf) {
             if (aluguel.getQtdHospedes() != null && aluguel.getQtdHospedes() > qf.getCapacidadeMaxima()) {
                 throw new CapacidadeExcedidaException(aluguel.getQtdHospedes(), qf.getCapacidadeMaxima());
@@ -113,12 +105,10 @@ public class AluguelService {
             }
         }
 
-        // 5. Calcular valor final e salvar
         aluguel.calcularValorFinal();
         return aluguelRepository.save(aluguel);
     }
 
-    /** Cancela um aluguel (Sprint 3 - Cancelamento de aluguel). */
     public Aluguel cancelar(Long id) {
         Aluguel aluguel = aluguelRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Aluguel não encontrado com id: " + id));
