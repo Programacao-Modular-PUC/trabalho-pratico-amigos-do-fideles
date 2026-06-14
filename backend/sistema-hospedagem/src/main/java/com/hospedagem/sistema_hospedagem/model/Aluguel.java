@@ -22,6 +22,7 @@ public class Aluguel {
     private int qtdDiarias;
     private Integer qtdHospedes;
     private Double valorFinal;
+    private String status; // "ATIVO" ou "CANCELADO"
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
@@ -32,6 +33,7 @@ public class Aluguel {
     private Quarto quarto;
 
     public Aluguel() {
+        this.status = "ATIVO";
     }
 
     public Aluguel(LocalDateTime dataEntrada, LocalDateTime dataSaida, Integer qtdHospedes,
@@ -41,75 +43,50 @@ public class Aluguel {
         this.qtdHospedes = qtdHospedes;
         this.cliente = cliente;
         this.quarto = quarto;
+        this.status = "ATIVO";
     }
 
-    public Long getId() {
-        return id;
+    // ─── Getters e Setters ───────────────────────────────────────────────────
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public LocalDateTime getDataEntrada() { return dataEntrada; }
+    public void setDataEntrada(LocalDateTime dataEntrada) { this.dataEntrada = dataEntrada; }
+
+    public LocalDateTime getDataSaida() { return dataSaida; }
+    public void setDataSaida(LocalDateTime dataSaida) { this.dataSaida = dataSaida; }
+
+    public int getQtdDiarias() { return qtdDiarias; }
+    public void setQtdDiarias(int qtdDiarias) { this.qtdDiarias = qtdDiarias; }
+
+    public Integer getQtdHospedes() { return qtdHospedes; }
+    public void setQtdHospedes(Integer qtdHospedes) { this.qtdHospedes = qtdHospedes; }
+
+    public Double getValorFinal() { return valorFinal; }
+    public void setValorFinal(Double valorFinal) { this.valorFinal = valorFinal; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+    public Cliente getCliente() { return cliente; }
+    public void setCliente(Cliente cliente) { this.cliente = cliente; }
+
+    public Quarto getQuarto() { return quarto; }
+    public void setQuarto(Quarto quarto) { this.quarto = quarto; }
+
+    // ─── Métodos de negócio ──────────────────────────────────────────────────
+
+    public void cancelar() {
+        this.status = "CANCELADO";
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getDataEntrada() {
-        return dataEntrada;
-    }
-
-    public void setDataEntrada(LocalDateTime dataEntrada) {
-        this.dataEntrada = dataEntrada;
-    }
-
-    public LocalDateTime getDataSaida() {
-        return dataSaida;
-    }
-
-    public void setDataSaida(LocalDateTime dataSaida) {
-        this.dataSaida = dataSaida;
-    }
-
-    public int getQtdDiarias() {
-        return qtdDiarias;
-    }
-
-    public void setQtdDiarias(int qtdDiarias) {
-        this.qtdDiarias = qtdDiarias;
-    }
-
-    public Integer getQtdHospedes() {
-        return qtdHospedes;
-    }
-
-    public void setQtdHospedes(Integer qtdHospedes) {
-        this.qtdHospedes = qtdHospedes;
-    }
-
-    public Double getValorFinal() {
-        return valorFinal;
-    }
-
-    public void setValorFinal(Double valorFinal) {
-        this.valorFinal = valorFinal;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public Quarto getQuarto() {
-        return quarto;
-    }
-
-    public void setQuarto(Quarto quarto) {
-        this.quarto = quarto;
+    public boolean isAtivo() {
+        return "ATIVO".equals(this.status);
     }
 
     public int calcularDiarias() {
-        if (dataEntrada == null || dataSaida == null)
-            return 0;
+        if (dataEntrada == null || dataSaida == null) return 0;
 
         int diarias = 0;
         LocalDateTime entrada = dataEntrada;

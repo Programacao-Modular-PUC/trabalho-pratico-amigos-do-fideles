@@ -22,12 +22,8 @@ public class AluguelController {
             @RequestParam(required = false) Long clienteId,
             @RequestParam(required = false) Long quartoId) {
 
-        if (clienteId != null) {
-            return ResponseEntity.ok(aluguelService.listarPorCliente(clienteId));
-        }
-        if (quartoId != null) {
-            return ResponseEntity.ok(aluguelService.listarPorQuarto(quartoId));
-        }
+        if (clienteId != null) return ResponseEntity.ok(aluguelService.listarPorCliente(clienteId));
+        if (quartoId  != null) return ResponseEntity.ok(aluguelService.listarPorQuarto(quartoId));
         return ResponseEntity.ok(aluguelService.listarTodos());
     }
 
@@ -38,14 +34,23 @@ public class AluguelController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    /** Histórico completo (ativo + cancelado) de um cliente. Sprint 3. */
+    @GetMapping("/historico/{clienteId}")
+    public ResponseEntity<List<Aluguel>> historico(@PathVariable Long clienteId) {
+        return ResponseEntity.ok(aluguelService.listarHistoricoCliente(clienteId));
+    }
+
     @PostMapping
     public ResponseEntity<Aluguel> criar(@RequestBody Aluguel aluguel) {
-        try {
-            Aluguel criado = aluguelService.criar(aluguel);
-            return ResponseEntity.status(HttpStatus.CREATED).body(criado);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
+        // Exceções tratadas pelo GlobalExceptionHandler
+        Aluguel criado = aluguelService.criar(aluguel);
+        return ResponseEntity.status(HttpStatus.CREATED).body(criado);
+    }
+
+    /** Cancelamento de aluguel. Sprint 3. */
+    @PatchMapping("/{id}/cancelar")
+    public ResponseEntity<Aluguel> cancelar(@PathVariable Long id) {
+        return ResponseEntity.ok(aluguelService.cancelar(id));
     }
 
     @DeleteMapping("/{id}")
