@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root {
+    --primary-marrom: #5D3E1A; 
+    --secondary-gold: #F0A500;   
+    --background-rustico: #F7EAD0; 
+    --white-paper: #FFFDF8;       
+}
+
+body {
+    background-color: var(--background-rustico);
+    font-family: 'Georgia', serif;
+}
+
+.navbar-fideles {
+    background-color: var(--primary-marrom);
+    padding: 10px 0;
+}
+.navbar-brand img {
+    max-height: 90px !important;
+}
+
+/* Card de Reserva */
+.reserva-container {
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+.resumo-reserva {
+    background: var(--white-paper);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: 1px solid #E8DFD0;
+}
+
+.secao-titulo {
+    color: var(--primary-marrom);
+    font-weight: bold;
+    border-bottom: 2px solid var(--secondary-gold);
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+
+.info-item {
+    margin-bottom: 15px;
+}
+
+.info-label {
+    font-size: 0.85rem;
+    color: #888;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.info-valor {
+    font-size: 1.1rem;
+    color: var(--primary-marrom);
+    font-weight: 600;
+}
+
+/* Inputs de Data */
+.form-label {
+    font-weight: 600;
+    color: var(--primary-marrom);
+}
+
+.input-reserva {
+    border: 1px solid #CCC;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+/* Box de Preço Total */
+.total-box {
+    background-color: #F1E6D2;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    border: 2px dashed var(--secondary-gold);
+}
+
+.total-valor {
+    font-size: 2rem;
+    color: var(--primary-marrom);
+    font-weight: bold;
+}
+
+.btn-confirmar {
+    background-color: var(--primary-marrom);
+    color: white !important;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    width: 100%;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.btn-confirmar:hover {
+    background-color: var(--secondary-gold);
+    transform: translateY(-3px);
+}

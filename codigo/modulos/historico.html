@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Reservas - Amigos do Fideles</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/proprietario.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-fideles">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="../img/logo.png" alt="Logo" style="max-height: 60px;">
+            </a>
+            <span class="text-white">Minhas Reservas</span>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <div class="painel-header">
+            <div>
+                <h2 class="painel-titulo">Histórico de Reservas</h2>
+                <p class="painel-sub" id="nomeCliente">Carregando...</p>
+            </div>
+            <a href="index.html" class="btn-novo">
+                <i class="bi bi-plus-lg"></i> Nova Reserva
+            </a>
+        </div>
+
+        <div class="tabela-wrap">
+            <table class="tabela-crud">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Residência</th>
+                        <th>Quarto</th>
+                        <th>Entrada</th>
+                        <th>Saída</th>
+                        <th>Diárias</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="corpoTabela"></tbody>
+            </table>
+            <div id="semDados" style="display:none; text-align:center; padding: 40px; color:#aaa;">
+                <i class="bi bi-calendar-x" style="font-size:2.5rem;"></i>
+                <p class="mt-2">Nenhuma reserva encontrada.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/historico.js"></script>
+</body>
+</html>

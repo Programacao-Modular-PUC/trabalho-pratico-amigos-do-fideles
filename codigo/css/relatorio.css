@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-marrom: #5D3E1A; 
+    --secondary-gold: #F0A500;   
+    --background-rustico: #F7EAD0; 
+}
+
+body {
+    background-color: var(--background-rustico);
+    font-family: 'Georgia', serif;
+}
+
+.navbar-fideles {
+    background-color: var(--primary-marrom);
+    padding: 10px 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.navbar-brand img {
+    max-height: 90px !important;
+    width: auto;
+}
+
+.card-gestao {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    border: none;
+}
+
+.resumo-financeiro {
+    background: var(--primary-marrom);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.tabela-historico thead {
+    background-color: var(--primary-marrom);
+    color: white;
+}
+
+.nome-cliente {
+    font-weight: bold;
+    color: var(--primary-marrom);
+}
+
+.badge-quarto {
+    background: #eee;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+}

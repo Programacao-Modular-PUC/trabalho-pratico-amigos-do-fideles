@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amigos do Fideles - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/loginCadastro.css">
+</head>
+<body class="flex-center">
+    <div class="custom-card login-card">
+        <div class="card-header-logo">
+            <img src="../img/logo.png" alt="Logo">
+            <p class="auth-subtitle mt-2">Sua hospedaria em Maraú te espera.</p>
+        </div>
+
+        <div id="msg-erro" class="alert alert-danger d-none" role="alert"></div>
+
+        <div class="mb-3">
+            <div class="d-flex gap-3 justify-content-center">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tipoCadastro" id="tipoCliente" value="cliente" checked>
+                    <label class="form-check-label" for="tipoCliente">Cliente</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tipoCadastro" id="tipoProprietario" value="proprietario">
+                    <label class="form-check-label" for="tipoProprietario">Proprietário</label>
+                </div>
+            </div>
+        </div>
+
+        <form id="form-login">
+            <div class="mb-3 text-start">
+                <label class="form-label">E-mail</label>
+                <input type="email" id="email" class="form-control" placeholder="exemplo@email.com" required>
+            </div>
+            <div class="mb-4 text-start">
+                <label class="form-label">Senha</label>
+                <input type="password" id="senha" class="form-control" placeholder="Sua senha" required>
+            </div>
+            <button type="submit" class="btn btn-auth" id="btn-login">Acessar Hospedaria</button>
+            <div class="mt-3">
+                <small>Novo por aqui? <a href="register.html" class="auth-link">Crie uma conta</a></small>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/login.js"></script>
+</body>
+</html>

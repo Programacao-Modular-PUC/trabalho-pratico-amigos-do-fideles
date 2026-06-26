@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Confirmação de Reserva – Amigos do Fideles</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/admin.css"/>
+</head>
+<body>
+
+  <nav class="navbar navbar-fideles">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="../img/logo.png" alt="Logo" style="max-height: 60px;">
+      </a>
+      <span class="text-white">Confirmação de Reserva</span>
+    </div>
+  </nav>
+
+  <main>
+    <div class="card">
+
+      <div class="banner">
+        <div class="checkmark">
+          <svg viewBox="0 0 30 30" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="5,16 12,23 25,8"/>
+          </svg>
+        </div>
+        <div class="banner-text">
+          <h1>Reserva Confirmada!</h1>
+          <p>Sua estadia foi registrada com sucesso. Aguardamos sua chegada.</p>
+        </div>
+        <div style="margin-left:auto;">
+          <div class="badge"><span class="badge-dot"></span>Confirmado</div>
+        </div>
+      </div>
+
+      <div class="divider-gold"></div>
+
+      <div class="code-strip">
+        <div>
+          <div class="code-label">Código da Reserva</div>
+          <div class="code-value" id="codigoReserva">#FID-2026-0000</div>
+        </div>
+        <div class="code-date" id="dataEmissao">Emitido em: ---</div>
+      </div>
+
+      <div class="body-grid">
+
+        <div class="section">
+          <div class="section-title">Residência</div>
+          <div class="info-row">
+            <label>Endereço</label>
+            <strong id="enderecoResidencia">---</strong>
+          </div>
+          <div class="info-row">
+            <label>Quarto</label>
+            <strong id="tipoQuarto">---</strong>
+          </div>
+          <div class="info-row">
+            <label>Valor da Diária</label>
+            <strong id="valorDiaria">---</strong>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">Hóspede</div>
+          <div class="info-row">
+            <label>Nome</label>
+            <strong id="nomeCliente">---</strong>
+          </div>
+          <div class="info-row">
+            <label>Telefone</label>
+            <span id="telefoneCliente">---</span>
+          </div>
+          <div class="info-row">
+            <label>E-mail</label>
+            <span id="emailCliente">---</span>
+          </div>
+        </div>
+
+        <div class="section" style="grid-column: 1 / -1;">
+          <div class="section-title">Período da Estadia</div>
+          <div class="dates-row">
+            <div class="date-block">
+              <div class="info-row">
+                <label>Check-in</label>
+                <strong id="dataEntrada">---</strong>
+              </div>
+            </div>
+            <div class="arrow-block">→</div>
+            <div class="date-block">
+              <div class="info-row">
+                <label>Check-out</label>
+                <strong id="dataSaida">---</strong>
+              </div>
+            </div>
+            <div class="arrow-block"></div>
+            <div class="date-block" style="text-align:right;">
+              <div class="info-row" style="align-items:flex-end;">
+                <label>Total de Diárias</label>
+                <strong id="qtdDiarias" style="font-size:1.8rem; color:var(--gold);">0</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="total-section">
+          <div class="price-breakdown">
+            <div class="section-title" style="margin-bottom:12px;">Resumo Financeiro</div>
+            <div class="price-line">
+              <span id="descricaoDiaria">Diária × --- noites</span>
+              <span id="subtotal">R$ 0,00</span>
+            </div>
+            <div class="price-line total">
+              <span>Total a pagar</span>
+              <span id="totalPagar">R$ 0,00</span>
+            </div>
+          </div>
+          <div class="total-highlight">
+            <div class="tl">Total Estimado</div>
+            <div class="tv" id="totalDestaque">R$ 0,00</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="actions">
+        <button class="btn-confirmar" onclick="window.print()">Imprimir / Salvar PDF</button>
+        <p class="text-center mt-3 small"><a href="index.html" class="text-muted">Voltar ao início</a></p>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/recibo.js"></script>
+</body>
+</html>

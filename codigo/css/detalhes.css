@@ -1,0 +1,128 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-marrom: #5D3E1A; 
+    --secondary-gold: #F0A500;   
+    --background-rustico: #F7EAD0; 
+    --white-paper: #FFFDF8;       
+}
+
+body {
+    background-color: var(--background-rustico);
+    font-family: 'Georgia', serif;
+}
+
+.navbar-fideles {
+    background-color: var(--primary-marrom);
+    padding: 10px 0;
+}
+
+.navbar-brand img {
+    max-height: 90px !important;
+}
+
+.detalhe-header {
+    background: var(--white-paper);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-top: 30px;
+}
+
+.img-principal {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.info-residencia h1 {
+    color: var(--primary-marrom);
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.endereco-label {
+    color: var(--secondary-gold);
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.quarto-card {
+    background: white;
+    border: 1px solid #E8DFD0;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: 0.3s;
+}
+
+.quarto-card:hover {
+    border-color: var(--secondary-gold);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.tipo-quarto {
+    font-weight: bold;
+    color: var(--primary-marrom);
+    font-size: 1.2rem;
+}
+
+.valor-base {
+    color: var(--secondary-gold);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.btn-reservar-quarto {
+    background-color: var(--primary-marrom);
+    color: white !important;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    float: right;
+}
+
+.btn-reservar-quarto:hover {
+    background-color: var(--secondary-gold);
+}
+
+.tag-item {
+    font-size: 0.8rem;
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+#filtroTipo {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.btn-filtro {
+    background: none;
+    border: 2px solid var(--primary-marrom);
+    color: var(--primary-marrom);
+    border-radius: 20px;
+    padding: 5px 16px;
+    cursor: pointer;
+    font-family: 'Georgia', serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-filtro:hover,
+.btn-filtro.ativo {
+    background-color: var(--primary-marrom);
+    color: white;
+}

@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-marrom: #5D3E1A; 
+    --secondary-gold: #F0A500;   
+    --background-rustico: #F7EAD0; 
+    --white-paper: #FFFDF8;       
+}
+
+body {
+    background-color: var(--background-rustico);
+    font-family: 'Georgia', serif;
+    margin: 0;
+}
+
+.navbar-fideles {
+    background-color: var(--primary-marrom);
+    padding: 10px 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.navbar-brand img {
+    max-height: 90px !important;
+    width: auto;
+}
+
+.search-container {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.search-input {
+    border: 2px solid var(--primary-marrom);
+    border-radius: 12px 0 0 12px !important;
+    padding: 15px;
+}
+
+.btn-search {
+    background-color: var(--primary-marrom);
+    color: white !important;
+    border: 2px solid var(--primary-marrom);
+    border-radius: 0 12px 12px 0 !important;
+    font-weight: bold;
+    padding: 0 25px;
+}
+
+.btn-search:hover {
+    background-color: var(--secondary-gold);
+    color: var(--primary-marrom) !important;
+}
+
+.residencia-card {
+    background: var(--white-paper);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 4px 4px 15px rgba(93, 62, 26, 0.08);
+    border: none;
+    height: 100%;
+    transition: transform 0.3s ease;
+}
+
+.residencia-card:hover {
+    transform: translateY(-8px);
+}
+
+.residencia-img {
+    height: 220px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.residencia-content {
+    padding: 25px;
+}
+
+.residencia-local {
+    color: var(--secondary-gold);
+    font-weight: bold;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.residencia-title {
+    color: var(--primary-marrom);
+    font-weight: bold;
+    margin: 8px 0 20px 0;
+    font-size: 1.4rem;
+}
+
+.btn-card {
+    background-color: var(--primary-marrom) !important;
+    color: white !important;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    width: 100%;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-card:hover {
+    background-color: var(--secondary-gold) !important;
+    color: var(--primary-marrom) !important;
+}
