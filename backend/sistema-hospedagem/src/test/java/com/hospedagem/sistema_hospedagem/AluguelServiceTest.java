@@ -4,18 +4,12 @@ import com.hospedagem.sistema_hospedagem.exception.CapacidadeExcedidaException;
 import com.hospedagem.sistema_hospedagem.exception.DataInvalidaException;
 import com.hospedagem.sistema_hospedagem.exception.QuartoIndisponivelException;
 import com.hospedagem.sistema_hospedagem.model.*;
-<<<<<<< HEAD
-=======
 import com.hospedagem.sistema_hospedagem.notificacao.CentralDeNotificacoes;
->>>>>>> master
 import com.hospedagem.sistema_hospedagem.repository.AluguelRepository;
 import com.hospedagem.sistema_hospedagem.repository.ClienteRepository;
 import com.hospedagem.sistema_hospedagem.repository.QuartoRepository;
 import com.hospedagem.sistema_hospedagem.service.AluguelService;
-<<<<<<< HEAD
-=======
 import com.hospedagem.sistema_hospedagem.tarifa.TarifaStrategyFactory;
->>>>>>> master
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,11 +33,8 @@ class AluguelServiceTest {
     @Mock private AluguelRepository aluguelRepository;
     @Mock private ClienteRepository clienteRepository;
     @Mock private QuartoRepository  quartoRepository;
-<<<<<<< HEAD
-=======
     @Mock private TarifaStrategyFactory tarifaStrategyFactory;
     @Mock private CentralDeNotificacoes centralDeNotificacoes;
->>>>>>> master
 
     @InjectMocks
     private AluguelService aluguelService;
@@ -64,10 +55,6 @@ class AluguelServiceTest {
         quartoFamilia.setId(20L);
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
     @Test
     @DisplayName("criar: lança QuartoIndisponivelException quando quarto já está ocupado")
     void criar_DeveLancar_QuartoIndisponivelException() {
@@ -113,21 +100,13 @@ class AluguelServiceTest {
         verify(aluguelRepository, times(1)).save(any());
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
     @Test
     @DisplayName("criar: lança CapacidadeExcedidaException para QuartoFamilia com hóspedes acima do limite")
     void criar_DeveLancar_CapacidadeExcedidaException_QuartoFamilia() {
         LocalDateTime entrada = LocalDateTime.now().plusDays(5);
         LocalDateTime saida   = LocalDateTime.now().plusDays(10);
 
-<<<<<<< HEAD
-        Aluguel aluguel = new Aluguel(entrada, saida, 10, cliente, quartoFamilia); // 10 > capacidade 6
-=======
         Aluguel aluguel = new Aluguel(entrada, saida, 10, cliente, quartoFamilia);
->>>>>>> master
         aluguel.setCliente(cliente);
         aluguel.setQuarto(quartoFamilia);
 
@@ -144,11 +123,7 @@ class AluguelServiceTest {
         LocalDateTime entrada = LocalDateTime.now().plusDays(5);
         LocalDateTime saida   = LocalDateTime.now().plusDays(10);
 
-<<<<<<< HEAD
-        Aluguel aluguel = new Aluguel(entrada, saida, 5, cliente, quartoIndividual); // 5 > limite 2
-=======
         Aluguel aluguel = new Aluguel(entrada, saida, 5, cliente, quartoIndividual);
->>>>>>> master
         aluguel.setCliente(cliente);
         aluguel.setQuarto(quartoIndividual);
 
@@ -159,19 +134,11 @@ class AluguelServiceTest {
         assertThrows(CapacidadeExcedidaException.class, () -> aluguelService.criar(aluguel));
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
     @Test
     @DisplayName("criar: lança DataInvalidaException quando dataEntrada >= dataSaida")
     void criar_DeveLancar_DataInvalidaException_EntradaAposSaida() {
         LocalDateTime entrada = LocalDateTime.now().plusDays(10);
-<<<<<<< HEAD
-        LocalDateTime saida   = LocalDateTime.now().plusDays(5); // saida antes da entrada
-=======
         LocalDateTime saida   = LocalDateTime.now().plusDays(5);
->>>>>>> master
 
         Aluguel aluguel = new Aluguel(entrada, saida, 1, cliente, quartoIndividual);
         aluguel.setCliente(cliente);
@@ -193,11 +160,7 @@ class AluguelServiceTest {
     @Test
     @DisplayName("criar: lança DataInvalidaException quando data de entrada está no passado")
     void criar_DeveLancar_DataInvalidaException_DataNoPassado() {
-<<<<<<< HEAD
-        LocalDateTime entrada = LocalDateTime.now().minusDays(2); // passado
-=======
         LocalDateTime entrada = LocalDateTime.now().minusDays(2);
->>>>>>> master
         LocalDateTime saida   = LocalDateTime.now().plusDays(3);
 
         Aluguel aluguel = new Aluguel(entrada, saida, 1, cliente, quartoIndividual);
@@ -207,10 +170,6 @@ class AluguelServiceTest {
         assertThrows(DataInvalidaException.class, () -> aluguelService.criar(aluguel));
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
     @Test
     @DisplayName("cancelar: muda status para CANCELADO")
     void cancelar_Aluguel_ComSucesso() {
@@ -239,10 +198,6 @@ class AluguelServiceTest {
         assertThrows(IllegalArgumentException.class, () -> aluguelService.cancelar(1L));
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
     @Test
     @DisplayName("listarHistoricoCliente: retorna todos os aluguéis do cliente")
     void listarHistoricoCliente_RetornaAlugueis() {
@@ -265,10 +220,6 @@ class AluguelServiceTest {
         assertThrows(RuntimeException.class, () -> aluguelService.listarHistoricoCliente(99L));
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
     @Test
     @DisplayName("verificarDisponibilidade: ignora aluguéis cancelados ao checar conflito")
     void disponibilidade_IgnoraAluguelCancelado() {
@@ -286,8 +237,4 @@ class AluguelServiceTest {
 
         assertDoesNotThrow(() -> aluguelService.verificarDisponibilidade(10L, entrada, saida));
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> master

@@ -1,11 +1,8 @@
 package com.hospedagem.sistema_hospedagem.model;
 
 import jakarta.persistence.Entity;
-<<<<<<< HEAD
-=======
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
->>>>>>> master
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,14 +24,10 @@ public class Aluguel {
     private int qtdDiarias;
     private Integer qtdHospedes;
     private Double valorFinal;
-<<<<<<< HEAD
-    private String status; // "ATIVO" ou "CANCELADO"
-=======
     private String status;
 
     @Enumerated(EnumType.STRING)
     private TipoTarifa tipoTarifa = TipoTarifa.PADRAO;
->>>>>>> master
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
@@ -58,11 +51,6 @@ public class Aluguel {
         this.status = "ATIVO";
     }
 
-<<<<<<< HEAD
-    // ─── Getters e Setters ───────────────────────────────────────────────────
-
-=======
->>>>>>> master
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -84,25 +72,17 @@ public class Aluguel {
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
 
-<<<<<<< HEAD
-=======
     public TipoTarifa getTipoTarifa() { return tipoTarifa; }
     public void setTipoTarifa(TipoTarifa tipoTarifa) {
         this.tipoTarifa = (tipoTarifa == null) ? TipoTarifa.PADRAO : tipoTarifa;
     }
 
->>>>>>> master
     public Cliente getCliente() { return cliente; }
     public void setCliente(Cliente cliente) { this.cliente = cliente; }
 
     public Quarto getQuarto() { return quarto; }
     public void setQuarto(Quarto quarto) { this.quarto = quarto; }
 
-<<<<<<< HEAD
-    // ─── Métodos de negócio ──────────────────────────────────────────────────
-
-=======
->>>>>>> master
     public void cancelar() {
         this.status = "CANCELADO";
     }
@@ -144,8 +124,4 @@ public class Aluguel {
 
         return valorFinal;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> master
