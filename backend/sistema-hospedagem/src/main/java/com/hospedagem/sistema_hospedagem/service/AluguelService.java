@@ -3,6 +3,7 @@ package com.hospedagem.sistema_hospedagem.service;
 import com.hospedagem.sistema_hospedagem.exception.CapacidadeExcedidaException;
 import com.hospedagem.sistema_hospedagem.exception.DataInvalidaException;
 import com.hospedagem.sistema_hospedagem.exception.QuartoIndisponivelException;
+<<<<<<< HEAD
 import com.hospedagem.sistema_hospedagem.model.Aluguel;
 import com.hospedagem.sistema_hospedagem.model.Cliente;
 import com.hospedagem.sistema_hospedagem.model.Quarto;
@@ -11,6 +12,23 @@ import com.hospedagem.sistema_hospedagem.model.QuartoIndividual;
 import com.hospedagem.sistema_hospedagem.repository.AluguelRepository;
 import com.hospedagem.sistema_hospedagem.repository.ClienteRepository;
 import com.hospedagem.sistema_hospedagem.repository.QuartoRepository;
+=======
+import com.hospedagem.sistema_hospedagem.log.RegistroDeLogs;
+import com.hospedagem.sistema_hospedagem.model.Aluguel;
+import com.hospedagem.sistema_hospedagem.model.Cliente;
+import com.hospedagem.sistema_hospedagem.model.EventoReserva;
+import com.hospedagem.sistema_hospedagem.model.Notificacao;
+import com.hospedagem.sistema_hospedagem.model.Quarto;
+import com.hospedagem.sistema_hospedagem.model.QuartoFamilia;
+import com.hospedagem.sistema_hospedagem.model.QuartoIndividual;
+import com.hospedagem.sistema_hospedagem.model.TipoTarifa;
+import com.hospedagem.sistema_hospedagem.notificacao.CentralDeNotificacoes;
+import com.hospedagem.sistema_hospedagem.repository.AluguelRepository;
+import com.hospedagem.sistema_hospedagem.repository.ClienteRepository;
+import com.hospedagem.sistema_hospedagem.repository.QuartoRepository;
+import com.hospedagem.sistema_hospedagem.tarifa.TarifaStrategy;
+import com.hospedagem.sistema_hospedagem.tarifa.TarifaStrategyFactory;
+>>>>>>> master
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +48,14 @@ public class AluguelService {
     @Autowired
     private QuartoRepository quartoRepository;
 
+<<<<<<< HEAD
+=======
+    @Autowired
+    private TarifaStrategyFactory tarifaStrategyFactory;
+
+    @Autowired
+    private CentralDeNotificacoes centralDeNotificacoes;
+>>>>>>> master
 
     public List<Aluguel> listarTodos() {
         return aluguelRepository.findAll();
@@ -47,7 +73,10 @@ public class AluguelService {
         return aluguelRepository.findByQuartoId(quartoId);
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
     public List<Aluguel> listarHistoricoCliente(Long clienteId) {
         clienteRepository.findById(clienteId)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado com id: " + clienteId));
@@ -72,7 +101,11 @@ public class AluguelService {
 
         List<Aluguel> alugueis = aluguelRepository.findByQuartoId(quartoId)
                 .stream()
+<<<<<<< HEAD
                 .filter(Aluguel::isAtivo) 
+=======
+                .filter(Aluguel::isAtivo)
+>>>>>>> master
                 .toList();
 
         if (!quarto.confirmarAluguel(dataEntrada, dataSaida, alugueis)) {
@@ -80,7 +113,10 @@ public class AluguelService {
         }
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
     public Aluguel criar(Aluguel aluguel) {
         validarDatas(aluguel.getDataEntrada(), aluguel.getDataSaida());
 
@@ -106,7 +142,67 @@ public class AluguelService {
         }
 
         aluguel.calcularValorFinal();
+<<<<<<< HEAD
         return aluguelRepository.save(aluguel);
+=======
+
+        aplicarTarifa(aluguel);
+
+        Aluguel salvo = aluguelRepository.save(aluguel);
+
+        notificar(EventoReserva.RESERVA_CRIADA,
+                "Sua reserva (id=" + salvo.getId() + ") foi criada. Valor: R$ "
+                        + String.format("%.2f", salvo.getValorFinal()),
+                salvo);
+
+        RegistroDeLogs.getInstance().info("Reserva criada id=" + salvo.getId()
+                + " tarifa=" + salvo.getTipoTarifa() + " valor=" + salvo.getValorFinal());
+        return salvo;
+    }
+
+    private void aplicarTarifa(Aluguel aluguel) {
+        if (tarifaStrategyFactory == null) {
+            return;
+        }
+        TipoTarifa tipo = definirTipoTarifa(aluguel);
+        TarifaStrategy estrategia = tarifaStrategyFactory.resolver(tipo);
+        if (estrategia == null) {
+            return;
+        }
+        double bruto = aluguel.getValorFinal() != null ? aluguel.getValorFinal() : 0.0;
+        double ajustado = estrategia.aplicar(bruto);
+        aluguel.setTipoTarifa(tipo);
+        aluguel.setValorFinal(ajustado);
+        RegistroDeLogs.getInstance().info("Tarifa aplicada: " + estrategia.getDescricao()
+                + " | bruto=" + String.format("%.2f", bruto)
+                + " ajustado=" + String.format("%.2f", ajustado));
+    }
+
+    private TipoTarifa definirTipoTarifa(Aluguel aluguel) {
+        TipoTarifa escolhido = aluguel.getTipoTarifa();
+        if (escolhido != null && escolhido != TipoTarifa.PADRAO) {
+            return escolhido;
+        }
+        Long clienteId = (aluguel.getCliente() != null) ? aluguel.getCliente().getId() : null;
+        if (clienteId != null) {
+            long ativos = aluguelRepository.findByClienteId(clienteId).stream()
+                    .filter(Aluguel::isAtivo).count();
+            if (ativos >= 3) {
+                return TipoTarifa.CLIENTE_FREQUENTE;
+            }
+        }
+        return TipoTarifa.PADRAO;
+    }
+
+    private void notificar(EventoReserva evento, String mensagem, Aluguel aluguel) {
+        if (centralDeNotificacoes == null) {
+            return;
+        }
+        String destinatario = (aluguel.getCliente() != null && aluguel.getCliente().getEmail() != null)
+                ? aluguel.getCliente().getEmail()
+                : "desconhecido";
+        centralDeNotificacoes.notificar(new Notificacao(evento, mensagem, destinatario));
+>>>>>>> master
     }
 
     public Aluguel cancelar(Long id) {
@@ -118,7 +214,17 @@ public class AluguelService {
         }
 
         aluguel.cancelar();
+<<<<<<< HEAD
         return aluguelRepository.save(aluguel);
+=======
+        Aluguel salvo = aluguelRepository.save(aluguel);
+
+        notificar(EventoReserva.RESERVA_CANCELADA,
+                "Sua reserva (id=" + salvo.getId() + ") foi cancelada.", salvo);
+
+        RegistroDeLogs.getInstance().alerta("Reserva cancelada id=" + salvo.getId());
+        return salvo;
+>>>>>>> master
     }
 
     public void deletar(Long id) {
@@ -126,4 +232,8 @@ public class AluguelService {
                 .orElseThrow(() -> new RuntimeException("Aluguel não encontrado com id: " + id));
         aluguelRepository.deleteById(id);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> master

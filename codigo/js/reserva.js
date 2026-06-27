@@ -126,7 +126,8 @@ async function confirmarAluguel() {
         return;
     }
 
-    let qtdHospedes = null;
+    let qtdHospedes = 1; 
+
     if (tipoQuarto === 'familia') {
         qtdHospedes = parseInt(document.getElementById('qtdHospedes').value);
         const capacidadeMaxima = quartoAtual?.capacidadeMaxima || 0;
@@ -139,6 +140,8 @@ async function confirmarAluguel() {
             alert(`Este quarto comporta no máximo ${capacidadeMaxima} hóspedes!`);
             return;
         }
+    } else if (tipoQuarto === 'duplo') {
+        qtdHospedes = 2;
     }
 
     const aluguel = {
@@ -146,7 +149,8 @@ async function confirmarAluguel() {
         dataSaida: `${dataSaida}T${horaSaida}:00`,
         cliente: { id: parseInt(clienteId) },
         quarto: { id: parseInt(quartoId), tipo: tipoQuarto },
-        qtdHospedes: qtdHospedes
+        qtdHospedes: qtdHospedes,
+        tipoTarifa: "PADRAO" 
     };
 
     try {
