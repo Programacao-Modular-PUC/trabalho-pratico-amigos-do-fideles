@@ -23,7 +23,6 @@ body {
     max-height: 90px !important;
 }
 
-/* Card de Reserva */
 .reserva-container {
     max-width: 900px;
     margin: 40px auto;
@@ -62,7 +61,6 @@ body {
     font-weight: 600;
 }
 
-/* Inputs de Data */
 .form-label {
     font-weight: 600;
     color: var(--primary-marrom);
@@ -74,7 +72,6 @@ body {
     padding: 12px;
 }
 
-/* Box de Preço Total */
 .total-box {
     background-color: #F1E6D2;
     border-radius: 15px;
