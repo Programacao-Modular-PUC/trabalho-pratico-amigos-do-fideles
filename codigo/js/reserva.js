@@ -7,6 +7,7 @@ const precoDiaria = parseFloat(urlParams.get('preco')) || 0;
 const tipoQuarto = urlParams.get('tipo') || 'individual';
 
 let quartoAtual = null;
+let aluguelConfirmadoId = null; 
 
 async function carregarResumo() {
     try {
@@ -163,14 +164,28 @@ async function confirmarAluguel() {
 
         if (response.ok) {
             const aluguelCriado = await response.json();
-            window.location.href = `recibo.html?aluguelId=${aluguelCriado.id}`;
+            mostrarNotificacaoObserver(aluguelCriado.id);
         } else {
             const erro = await response.json();
             alert(`Erro: ${erro.message || 'Não foi possível confirmar a reserva'}`);
         }
     } catch (error) {
-        console.error('Erro ao confirmar aluguel:', error);
+        console.error('Erro ao confirmar reserva:', error);
         alert('Erro ao conectar com o servidor!');
+    }
+}
+
+
+function mostrarNotificacaoObserver(id) {
+    aluguelConfirmadoId = id; 
+    document.getElementById('modalNotificacaoObserver').style.display = 'flex';
+}
+
+function fecharNotificacaoObserver() {
+    document.getElementById('modalNotificacaoObserver').style.display = 'none';
+    
+    if (aluguelConfirmadoId) {
+        window.location.href = `recibo.html?aluguelId=${aluguelConfirmadoId}`;
     }
 }
 
